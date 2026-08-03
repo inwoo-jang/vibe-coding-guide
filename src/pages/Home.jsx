@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { chapters } from '../data/chapters'
 import { useProgress } from '../lib/progress'
+import { useProjects } from '../lib/projects'
 
 export default function Home() {
-  const { doneCount, map } = useProgress()
+  const { doneCount, map, hasProject } = useProgress()
+  const { active } = useProjects()
   const nextChapter = chapters.find((c) => !map[c.id]) ?? chapters[0]
 
   return (
@@ -20,13 +22,27 @@ export default function Home() {
           맡기고, 결과를 확인하는 일은 여전히 사람 몫입니다. 이 가이드는 그 순서를 기획부터 배포까지
           8단계로 따라갑니다.
         </p>
+        {/* 읽기만 하고 끝나지 않도록, 처음 온 사람은 프로젝트 만들기로 보낸다. */}
         <div className="hero-actions">
-          <Link to={`/learn/${nextChapter.id}`} className="btn btn-primary">
-            {doneCount > 0 ? '이어서 학습하기' : '처음부터 시작하기'}
-          </Link>
-          <Link to="/learn" className="btn btn-ghost">
-            커리큘럼 전체 보기
-          </Link>
+          {hasProject ? (
+            <>
+              <Link to={`/learn/${nextChapter.id}`} className="btn btn-primary">
+                {doneCount > 0 ? `${active.name} 이어서 하기` : `${active.name} 시작하기`}
+              </Link>
+              <Link to="/projects" className="btn btn-ghost">
+                내 프로젝트
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/projects" className="btn btn-primary">
+                내 프로젝트 만들고 시작하기
+              </Link>
+              <Link to="/learn" className="btn btn-ghost">
+                먼저 커리큘럼만 보기
+              </Link>
+            </>
+          )}
         </div>
       </section>
 
@@ -40,6 +56,14 @@ export default function Home() {
       </section>
 
       <section className="cards">
+        <article className="card">
+          <h3>내 프로젝트로 한 사이클</h3>
+          <p>
+            챕터를 읽는 게 아니라 만들고 싶은 걸 하나 정해서 기획부터 배포까지 끝까지 갑니다. 진도는
+            프로젝트마다 따로 쌓입니다.
+          </p>
+          <Link to="/projects">프로젝트 만들기 →</Link>
+        </article>
         <article className="card">
           <h3>단계마다 쓸 프롬프트</h3>
           <p>

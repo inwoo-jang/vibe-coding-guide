@@ -1,0 +1,25 @@
+<!--
+  앱 아이콘. 홈 화면에 추가했을 때 보이는 그림.
+
+  디자인: 사이트와 같은 세이지 배경 + 종이색 마크.
+  마크는 "한 단계씩 올라가는 길" — 이 가이드가 8단계인 것에서 왔다.
+  가운데 60% 안에만 그린다 (마스커블 안전 영역).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#566450" />
+  <g
+    fill="none"
+    stroke="#f4f0e8"
+    stroke-width="18"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M160 352 L232 280 L304 304 L376 184" />
+  </g>
+  <g fill="#f4f0e8">
+    <circle cx="160" cy="352" r="20" />
+    <circle cx="232" cy="280" r="20" />
+    <circle cx="304" cy="304" r="20" />
+    <circle cx="376" cy="184" r="26" />
+  </g>
+</svg>

@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Vercel CLI 가 만드는 로컬 설정 (프로젝트 id 등)
+.vercel
+
 # 환경변수 — Supabase 키가 여기 들어간다. 절대 커밋하지 않는다.
 .env
 .env.*

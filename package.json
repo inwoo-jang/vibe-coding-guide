@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/check-env.mjs && vite build",
+    "check-env": "node scripts/check-env.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

@@ -1,12 +1,18 @@
 import { Link, useParams } from 'react-router-dom'
 import { chapterById, neighbors } from '../data/chapters'
 import { useProgress } from '../lib/progress'
+import { useAiTask } from '../lib/ai'
+import { projectContext, useProjects } from '../lib/projects'
 import PromptCard from '../components/PromptCard'
+import Prose from '../components/Prose'
+import AiPanel from '../components/AiPanel'
 
 export default function Chapter() {
   const { chapterId } = useParams()
   const chapter = chapterById[chapterId]
-  const { isDone, setDone } = useProgress()
+  const { isDone, setDone, hasProject } = useProgress()
+  const { active } = useProjects()
+  const review = useAiTask('review')
 
   if (!chapter) {
     return (
@@ -20,10 +26,21 @@ export default function Chapter() {
   const { prev, next } = neighbors(chapter.id)
   const done = isDone(chapter.id)
 
+  // 버튼 클릭에만 연결한다. 챕터를 열기만 해도 호출되면 안 된다.
+  function runReview() {
+    if (!active) return
+    review.run(
+      `[지금 단계]\n${chapter.stage} — ${chapter.title}\n${chapter.summary}\n` +
+        `다루는 내용: ${chapter.sections.map((s) => s.heading).join(', ')}\n\n` +
+        `[내 프로젝트]\n${projectContext(active)}`,
+    )
+  }
+
   return (
     <article className="page page-narrow">
       <p className="eyebrow">
         <Link to="/learn">커리큘럼</Link> / {chapter.stage} · {chapter.minutes}분
+        {active && <> · {active.name}</>}
       </p>
       <h1>{chapter.title}</h1>
       <p className="lede">{chapter.summary}</p>
@@ -32,12 +49,19 @@ export default function Chapter() {
         <h2>이 챕터에서 다루는 것</h2>
         <ul>
           {chapter.sections.map((s) => (
-            <li key={s}>{s}</li>
+            <li key={s.heading}>{s.heading}</li>
           ))}
         </ul>
-        {/* 본문은 다음 단계에서 채운다. */}
-        <p className="placeholder">본문 준비 중</p>
       </section>
+
+      <div className="chapter-body-text">
+        {chapter.sections.map((section) => (
+          <section key={section.heading} className="chapter-section">
+            <h2>{section.heading}</h2>
+            <Prose blocks={section.blocks} />
+          </section>
+        ))}
+      </div>
 
       {chapter.prompts?.length > 0 && (
         <section className="prompts">
@@ -48,15 +72,50 @@ export default function Chapter() {
         </section>
       )}
 
+      <AiPanel
+        title="이 단계, 제대로 한 게 맞나?"
+        hint="내 프로젝트에 맞춰서 넘어가기 전 확인할 것들을 점검표로 만들어줍니다."
+        actionLabel="점검표 만들기"
+        task={review}
+        onRun={runReview}
+        disabled={!active}
+        disabledReason={
+          <>
+            프로젝트를 만들면 이 기능을 쓸 수 있습니다. <Link to="/projects">프로젝트 만들기 →</Link>
+          </>
+        }
+      >
+        {(r) => (
+          <>
+            <ul className="check-list">
+              {r.checks?.map((c, i) => (
+                <li key={i}>
+                  <strong>{c.item}</strong>
+                  <span className="chapter-summary">{c.how}</span>
+                </li>
+              ))}
+            </ul>
+            {r.nextHint && <p className="notice">{r.nextHint}</p>}
+          </>
+        )}
+      </AiPanel>
+
       <div className="chapter-done">
-        <label>
-          <input
-            type="checkbox"
-            checked={done}
-            onChange={(e) => setDone(chapter.id, e.target.checked)}
-          />
-          이 챕터를 완료했습니다
-        </label>
+        {hasProject ? (
+          <label>
+            <input
+              type="checkbox"
+              checked={done}
+              onChange={(e) => setDone(chapter.id, e.target.checked)}
+            />
+            {active ? `"${active.name}"에서 이 단계를 끝냈습니다` : '이 챕터를 완료했습니다'}
+          </label>
+        ) : (
+          <p className="ai-hint">
+            진도는 프로젝트마다 따로 기록됩니다.{' '}
+            <Link to="/projects">먼저 프로젝트를 만드세요 →</Link>
+          </p>
+        )}
       </div>
 
       <nav className="chapter-nav">
@@ -72,8 +131,8 @@ export default function Chapter() {
             {next.stage} →
           </Link>
         ) : (
-          <Link to="/me" className="btn btn-primary">
-            내 진도 보기 →
+          <Link to="/projects" className="btn btn-primary">
+            내 프로젝트 보기 →
           </Link>
         )}
       </nav>
