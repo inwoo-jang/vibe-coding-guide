@@ -1085,6 +1085,141 @@ a {
   border-top: 1px solid var(--line);
 }
 
+/* ── 참고 자료 ────────────────────────────────────────────── */
+
+.res-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.res-group {
+  margin-bottom: 3.5rem;
+  scroll-margin-top: 6rem; /* 목차로 점프했을 때 상단바에 가리지 않게 */
+}
+
+.res-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.res-chapter {
+  font-size: 0.78rem;
+  color: var(--sage);
+  white-space: nowrap;
+}
+
+.res-chapter:hover {
+  border-bottom: 1px solid currentColor;
+}
+
+.res-blurb {
+  max-width: var(--measure);
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  word-break: keep-all;
+  margin-bottom: 1.25rem;
+}
+
+.res-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.res-list li {
+  border-bottom: 1px solid var(--line);
+}
+
+.res-item {
+  display: grid;
+  grid-template-columns: minmax(9rem, 13rem) 1fr auto;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 1rem 0.5rem;
+  transition: background 0.25s var(--ease), padding-left 0.25s var(--ease);
+}
+
+.res-item:hover {
+  background: var(--paper-raised);
+  padding-left: 1rem;
+}
+
+.res-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.98rem;
+  word-break: keep-all;
+}
+
+.res-note {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.res-what {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  word-break: keep-all;
+}
+
+.res-host {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* 챕터 안에 끼워 넣는 짧은 목록 */
+.res-inline {
+  margin-bottom: 1.75rem;
+}
+
+.res-inline h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+}
+
+.res-inline-list {
+  list-style: none;
+  margin: 0 0 0.6rem;
+  padding: 0;
+}
+
+.res-inline-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.res-inline-list a {
+  font-size: 0.92rem;
+  color: var(--sage);
+  align-self: flex-start;
+}
+
+.res-inline-list a:hover {
+  border-bottom: 1px solid currentColor;
+}
+
 /* ── 로그인 ───────────────────────────────────────────────── */
 
 .login-gate {
@@ -1279,6 +1414,15 @@ a {
 
   .chip-name {
     max-width: 5rem;
+  }
+
+  .res-item {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .res-host {
+    display: none; /* 좁은 화면에서는 도메인까지 보여줄 여유가 없다 */
   }
 }
 

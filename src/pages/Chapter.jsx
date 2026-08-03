@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { chapterById, neighbors } from '../data/chapters'
+import { resourcesForChapter } from '../data/resources'
 import { useProgress } from '../lib/progress'
 import { useAiTask } from '../lib/ai'
 import { projectContext, useProjects } from '../lib/projects'
@@ -68,6 +69,33 @@ export default function Chapter() {
           <h2>이 단계에서 쓰는 프롬프트</h2>
           {chapter.prompts.map((p) => (
             <PromptCard key={p.label} prompt={p} />
+          ))}
+        </section>
+      )}
+
+      {/* 이 단계에서 쓸 만한 링크. 전체 목록은 /resources 에 있다 */}
+      {resourcesForChapter(chapter.id).length > 0 && (
+        <section className="prompts">
+          <h2>이 단계에서 쓰는 도구·자료</h2>
+          {resourcesForChapter(chapter.id).map((group) => (
+            <div key={group.id} className="res-inline">
+              <h3>{group.title}</h3>
+              <ul className="res-inline-list">
+                {group.items.slice(0, 4).map((it) => (
+                  <li key={it.url}>
+                    <a href={it.url} target="_blank" rel="noreferrer noopener">
+                      {it.name}
+                    </a>
+                    <span className="chapter-summary">{it.what}</span>
+                  </li>
+                ))}
+              </ul>
+              {group.items.length > 4 && (
+                <Link to={`/resources#${group.id}`} className="ai-hint">
+                  {group.title} {group.items.length}개 전부 보기 →
+                </Link>
+              )}
+            </div>
           ))}
         </section>
       )}

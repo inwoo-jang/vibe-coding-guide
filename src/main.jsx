@@ -8,6 +8,7 @@ import Learn from './pages/Learn'
 import Chapter from './pages/Chapter'
 import Prompts from './pages/Prompts'
 import Glossary from './pages/Glossary'
+import Resources from './pages/Resources'
 import Projects from './pages/Projects'
 import Project from './pages/Project'
 import Me from './pages/Me'
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="projects/:projectId" element={<Project />} />
           <Route path="prompts" element={<Prompts />} />
           <Route path="glossary" element={<Glossary />} />
+          <Route path="resources" element={<Resources />} />
           {/* 옛 주소 — /me 는 프로젝트 목록으로 합쳐졌다 */}
           <Route path="me" element={<Me />} />
           <Route path="admin" element={<Admin />} />

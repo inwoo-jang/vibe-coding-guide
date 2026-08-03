@@ -8,6 +8,7 @@ const nav = [
   { to: '/learn', label: '학습' },
   { to: '/projects', label: '내 프로젝트' },
   { to: '/prompts', label: '프롬프트 사전' },
+  { to: '/resources', label: '참고 자료' },
   { to: '/glossary', label: '용어 사전' },
 ]
 
