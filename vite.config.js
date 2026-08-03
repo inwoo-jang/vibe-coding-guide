@@ -31,10 +31,15 @@ function apiDevServer(env) {
         if (!existsSync(`.${file}`)) return next()
 
         try {
-          // .env.local 의 비밀 값을 서버 프로세스에만 올린다.
+          // .env.local 의 값을 서버 프로세스에 올린다.
           // (Vite 는 VITE_ 없는 변수를 process.env 에 넣어주지 않는다.)
+          //
+          // VITE_ 붙은 것도 넣는다 — 배포된 Vercel 에서는 서버 함수가 모든 환경변수를
+          // 볼 수 있기 때문이다. 여기서 VITE_ 를 빼면 로컬에서만 인증이 안 걸려서,
+          // "설정 다 했는데 왜 로그인을 안 시키지?" 하고 한참 헤매게 된다.
+          // (VITE_ 값은 어차피 브라우저에 나가는 공개 값이라 서버에 둬도 위험하지 않다.)
           for (const [k, v] of Object.entries(env)) {
-            if (!k.startsWith('VITE_') && process.env[k] === undefined) process.env[k] = v
+            if (process.env[k] === undefined) process.env[k] = v
           }
           const { default: handler } = await server.ssrLoadModule(file)
           await handler(req, res)
