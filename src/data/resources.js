@@ -50,6 +50,69 @@ export const resourceGroups = [
   },
 
   {
+    id: 'database',
+    title: 'DB·백엔드',
+    blurb:
+      '초보는 "백엔드 통째로(BaaS)" 쪽에서 고르세요 — 로그인까지 들어 있습니다. 04 데이터 단계.',
+    chapter: 'data',
+    items: [
+      {
+        name: 'Supabase',
+        url: 'https://supabase.com',
+        what: 'SQL(Postgres) + 로그인 + 파일저장. 이 가이드가 쓰는 것. 표로 생각하는 방식이 그대로 통합니다',
+        note: '무료 시작',
+        pick: true,
+      },
+      {
+        name: 'Firebase',
+        url: 'https://firebase.google.com',
+        what: 'NoSQL + 로그인. 구글. 실시간 동기화가 강하고 자료가 가장 많습니다',
+        note: '무료 시작',
+      },
+      {
+        name: 'Appwrite',
+        url: 'https://appwrite.io',
+        what: '오픈소스 BaaS. 직접 서버에 설치할 수도 있습니다',
+        note: '오픈소스',
+      },
+      {
+        name: 'Pocketbase',
+        url: 'https://pocketbase.io',
+        what: '파일 하나로 돌아가는 초경량 백엔드. 작은 프로젝트에 좋습니다',
+        note: '오픈소스',
+      },
+      {
+        name: 'Neon',
+        url: 'https://neon.tech',
+        what: '서버리스 Postgres. DB만 필요할 때. 안 쓰면 잠들어서 무료 한도가 넉넉합니다',
+        note: '무료 시작',
+      },
+      {
+        name: 'Turso',
+        url: 'https://turso.tech',
+        what: 'SQLite 기반. 가볍고 빠릅니다',
+        note: '무료 시작',
+      },
+      {
+        name: 'Vercel Storage',
+        url: 'https://vercel.com/docs/storage',
+        what: 'Vercel에 배포한다면 연결이 제일 간단합니다 (Postgres·Blob·KV)',
+      },
+      {
+        name: 'MongoDB Atlas',
+        url: 'https://www.mongodb.com/atlas',
+        what: 'NoSQL. 데이터 모양이 제각각일 때',
+        note: '무료 시작',
+      },
+      {
+        name: 'Airtable',
+        url: 'https://www.airtable.com',
+        what: '엑셀처럼 쓰는 DB. 코드를 거의 안 쓰고 시작할 때. 사용자가 늘면 한계가 옵니다',
+      },
+    ],
+  },
+
+  {
     id: 'reference',
     title: '레퍼런스 — 무드 잡을 때',
     blurb: '"어떤 느낌으로 만들지" 정할 때. AI에게 보여줄 예시를 여기서 고릅니다.',
