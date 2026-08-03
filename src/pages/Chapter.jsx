@@ -10,7 +10,7 @@ import AiPanel from '../components/AiPanel'
 export default function Chapter() {
   const { chapterId } = useParams()
   const chapter = chapterById[chapterId]
-  const { isDone, setDone, hasProject } = useProgress()
+  const { isDone, setDone, hasProject, canWrite } = useProgress()
   const { active } = useProjects()
   const review = useAiTask('review')
 
@@ -78,11 +78,19 @@ export default function Chapter() {
         actionLabel="점검표 만들기"
         task={review}
         onRun={runReview}
-        disabled={!active}
+        disabled={!active || !canWrite}
         disabledReason={
-          <>
-            프로젝트를 만들면 이 기능을 쓸 수 있습니다. <Link to="/projects">프로젝트 만들기 →</Link>
-          </>
+          !canWrite ? (
+            <>
+              AI 기능은 로그인한 사람만 쓸 수 있습니다 — 호출할 때마다 요금이 나가기 때문입니다.{' '}
+              <Link to="/me">로그인하러 가기 →</Link>
+            </>
+          ) : (
+            <>
+              프로젝트를 만들면 이 기능을 쓸 수 있습니다.{' '}
+              <Link to="/projects">프로젝트 만들기 →</Link>
+            </>
+          )
         }
       >
         {(r) => (
@@ -101,7 +109,12 @@ export default function Chapter() {
       </AiPanel>
 
       <div className="chapter-done">
-        {hasProject ? (
+        {!canWrite ? (
+          <p className="ai-hint">
+            진도를 기록하려면 로그인이 필요합니다.{' '}
+            <Link to="/me">로그인하러 가기 →</Link>
+          </p>
+        ) : hasProject ? (
           <label>
             <input
               type="checkbox"

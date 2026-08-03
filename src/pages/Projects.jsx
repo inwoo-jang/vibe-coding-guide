@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { chapters } from '../data/chapters'
-import { useAiTask, useAiUsage } from '../lib/ai'
+import { useAiTask } from '../lib/ai'
 import { useAllProgress, migrateLegacyProgress } from '../lib/progress'
 import { useProjects } from '../lib/projects'
 import AiPanel from '../components/AiPanel'
+import LoginGate from '../components/LoginGate'
 
 export default function Projects() {
-  const { projects, activeId, create, remove, setActive } = useProjects()
+  const { projects, activeId, create, remove, setActive, canWrite, loading } = useProjects()
   const { countFor } = useAllProgress()
-  const usage = useAiUsage()
   const navigate = useNavigate()
 
   const [idea, setIdea] = useState('')
@@ -21,21 +21,18 @@ export default function Projects() {
     kickoff.run(idea)
   }
 
-  function createFromPrd() {
+  async function createFromPrd() {
     const prd = kickoff.result
-    const project = create({
-      name: prd.name,
-      idea,
-      oneLiner: prd.oneLiner,
-      prd,
-    })
+    const project = await create({ name: prd.name, idea, oneLiner: prd.oneLiner, prd })
+    if (!project) return
     migrateLegacyProgress(project.id)
     navigate(`/projects/${project.id}`)
   }
 
-  function createPlain() {
+  async function createPlain() {
     if (!idea.trim()) return
-    const project = create({ name: idea.trim().slice(0, 40), idea })
+    const project = await create({ name: idea.trim().slice(0, 40), idea })
+    if (!project) return
     migrateLegacyProgress(project.id)
     navigate(`/projects/${project.id}`)
   }
@@ -50,6 +47,14 @@ export default function Projects() {
         </p>
       </header>
 
+      {/* 로그인 안 했으면 만들기 대신 안내를 보여준다 */}
+      {!canWrite ? (
+        <LoginGate
+          title="로그인하면 내 프로젝트를 만들 수 있습니다"
+          reason="진도와 기획서가 계정에 저장돼서 다른 기기에서 열어도 그대로입니다. 챕터 본문과 프롬프트는 로그인 없이 계속 읽을 수 있습니다."
+        />
+      ) : (
+      <>
       {/* ── 새 프로젝트 ────────────────────────────────────── */}
       <section className="new-project">
         <h2>새로 만들기</h2>
@@ -96,7 +101,9 @@ export default function Projects() {
       {/* ── 목록 ───────────────────────────────────────────── */}
       <section>
         <h2>진행 중</h2>
-        {projects.length === 0 ? (
+        {loading ? (
+          <p className="placeholder">불러오는 중…</p>
+        ) : projects.length === 0 ? (
           <p className="placeholder">아직 프로젝트가 없습니다. 위에서 하나 만들어보세요.</p>
         ) : (
           <ul className="project-list">
@@ -143,21 +150,12 @@ export default function Projects() {
         )}
       </section>
 
-      {/* ── AI 사용량 ──────────────────────────────────────── */}
-      <section className="usage">
-        <h2>AI 사용량</h2>
-        <p className="meta">
-          호출 {usage.calls}회 · 입력 {usage.in.toLocaleString()} 토큰 · 출력{' '}
-          {usage.out.toLocaleString()} 토큰
-        </p>
-        <p className="ai-hint">
-          같은 요청은 저장해뒀다가 다시 씁니다. 저장된 답을 볼 때는 호출로 세지 않고 요금도
-          나가지 않습니다.{' '}
-          <button type="button" className="linkish" onClick={usage.reset}>
-            숫자 초기화
-          </button>
-        </p>
-      </section>
+      {/* AI 사용량은 마이페이지로 옮겼다 — 계정 단위 기록이라 거기가 맞다 */}
+      <p className="ai-hint">
+        AI를 얼마나 썼는지는 <Link to="/me">마이페이지</Link>에서 봅니다.
+      </p>
+      </>
+      )}
     </div>
   )
 }

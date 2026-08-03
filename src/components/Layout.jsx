@@ -2,6 +2,7 @@ import { NavLink, Outlet, Link } from 'react-router-dom'
 import { chapters } from '../data/chapters'
 import { useProgress } from '../lib/progress'
 import { useProjects } from '../lib/projects'
+import { useAuth } from '../lib/auth'
 
 const nav = [
   { to: '/learn', label: '학습' },
@@ -13,7 +14,11 @@ const nav = [
 export default function Layout() {
   const { active } = useProjects()
   const { doneCount, hasProject } = useProgress()
+  const { status, name, profile, isAdmin, isCloudMode } = useAuth()
   const pct = Math.round((doneCount / chapters.length) * 100)
+
+  const signedIn = status === 'signed-in'
+  const signedOut = isCloudMode && status === 'signed-out'
 
   return (
     <div className="shell">
@@ -30,7 +35,7 @@ export default function Layout() {
         </nav>
         <div className="topbar-right">
           {/* 진도는 프로젝트별이라, 어느 프로젝트의 %인지 항상 같이 보여준다. */}
-          {hasProject ? (
+          {hasProject && (
             <Link
               to={`/projects/${active.id}`}
               className="progress-chip"
@@ -39,15 +44,27 @@ export default function Layout() {
               <span className="chip-name">{active.name}</span>
               {pct}%
             </Link>
+          )}
+
+          {signedIn ? (
+            <Link to="/me" className="me-chip" title={isAdmin ? '관리자' : '마이페이지'}>
+              {profile?.avatar_url ? (
+                <img src={profile.avatar_url} alt="" className="me-avatar-sm" />
+              ) : (
+                <span className="me-avatar-sm me-avatar-fallback">{name.slice(0, 1)}</span>
+              )}
+              <span className="chip-name">{name}</span>
+            </Link>
+          ) : signedOut ? (
+            <Link to="/me" className="btn btn-ghost">
+              로그인
+            </Link>
           ) : (
-            <Link to="/projects" className="btn btn-small">
-              프로젝트 만들기
+            // 로컬 모드 — 로그인 개념이 없다
+            <Link to="/me" className="btn btn-ghost">
+              마이페이지
             </Link>
           )}
-          {/* 로그인은 Supabase 붙일 때 실제 동작으로 교체 */}
-          <Link to="/projects" className="btn btn-ghost">
-            로그인
-          </Link>
         </div>
       </header>
 
@@ -57,7 +74,10 @@ export default function Layout() {
 
       <footer className="footer">
         <span>바이브코딩 가이드 — 초보를 위한 8단계</span>
-        <Link to="/admin">관리자</Link>
+        <span className="footer-links">
+          <Link to="/me">마이페이지</Link>
+          {(isAdmin || !isCloudMode) && <Link to="/admin">관리자</Link>}
+        </span>
       </footer>
     </div>
   )

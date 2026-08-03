@@ -11,6 +11,12 @@
 const MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini'
 const ENDPOINT = 'https://api.openai.com/v1/chat/completions'
 
+// Supabase — 로그인 확인과 사용량 기록에 쓴다.
+// VITE_ 붙은 이름도 받아준다. 서버 함수에서는 둘 다 읽히므로 중복 설정을 만들지 않는다.
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
+const SUPABASE_ANON = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
+const AUTH_ON = Boolean(SUPABASE_URL && SUPABASE_ANON)
+
 // ── 요금을 지키는 규칙 ─────────────────────────────────────────
 // 이 값들이 "요금 폭탄"을 막는 실제 장치다. 숫자를 올릴 때는 이유가 있어야 한다.
 //
@@ -119,12 +125,81 @@ function tooManyRequests(who) {
   return false
 }
 
+/**
+ * 토큰이 진짜인지 Supabase 에게 물어본다.
+ *
+ * 브라우저가 보낸 user_id 를 그냥 믿으면 안 된다 — 아무 값이나 적어 보낼 수 있다.
+ * 토큰을 Supabase 에 넘겨서 "이거 누구 거냐"고 확인받아야 한다.
+ * 이게 인증(authentication)이고, 보안 챕터에서 인가와 구별해 가르치는 그것이다.
+ */
+async function verifyUser(token) {
+  if (!token) return null
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { authorization: `Bearer ${token}`, apikey: SUPABASE_ANON },
+    })
+    if (!res.ok) return null
+    const user = await res.json()
+    return user?.id ? user : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * 사용량 한 줄 기록. 사용자 본인의 토큰으로 넣으므로 RLS 가 그대로 적용된다.
+ * (service_role 키는 쓰지 않는다 — 그건 RLS 를 통째로 무시한다.)
+ *
+ * 실패해도 조용히 넘어간다. 기록 실패 때문에 사용자가 받을 답이 사라지면 안 된다.
+ */
+async function recordUsage(token, userId, task, usage) {
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/ai_usage`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        apikey: SUPABASE_ANON,
+        authorization: `Bearer ${token}`,
+        prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        task,
+        model: MODEL,
+        input_tokens: usage.in,
+        output_tokens: usage.out,
+      }),
+    })
+  } catch (err) {
+    console.error('[api/ai] 사용량 기록 실패 (요청 자체는 성공)', err)
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return json(res, 405, { error: 'POST 로만 호출하세요.' })
   }
 
-  const who = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown'
+  // ── 로그인 확인 ──────────────────────────────────────────────
+  // AI 기능은 호출할 때마다 돈이 나간다. 로그인한 사람만 쓸 수 있어야
+  // 누가 얼마나 썼는지 알 수 있고, 문제가 생겼을 때 막을 수 있다.
+  const token = (req.headers.authorization || '').replace(/^Bearer\s+/i, '')
+  let user = null
+  if (AUTH_ON) {
+    user = await verifyUser(token)
+    if (!user) {
+      return json(res, 401, {
+        error: '로그인이 필요합니다.',
+        hint: 'AI 기능은 로그인한 사람만 쓸 수 있습니다. 요금이 나가는 기능이라 그렇습니다.',
+      })
+    }
+  }
+  // AUTH_ON 이 false = Supabase 미설정 = 로컬 개발 모드.
+  // 이때는 로그인 없이 통과시킨다. 안 그러면 키만 넣고는 테스트를 못 한다.
+
+  const who = AUTH_ON
+    ? user.id // 로그인 상태에서는 사람 단위로 센다 (IP 를 공유해도 정확)
+    : req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown'
   if (tooManyRequests(String(who))) {
     return json(res, 429, {
       error: '너무 자주 요청했습니다. 잠시 후 다시 시도해 주세요.',
@@ -196,6 +271,9 @@ export default async function handler(req, res) {
       out: data.usage?.completion_tokens ?? 0,
     }
     console.log(`[api/ai] ${body.task} 입력 ${usage.in} / 출력 ${usage.out} 토큰`)
+
+    // 로그인 상태면 DB 에 남긴다. 마이페이지와 관리자 화면이 이걸 읽는다.
+    if (AUTH_ON && user) await recordUsage(token, user.id, body.task, usage)
 
     if (task.json) {
       const parsed = safeParse(text)

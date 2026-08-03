@@ -1085,6 +1085,154 @@ a {
   border-top: 1px solid var(--line);
 }
 
+/* ── 로그인 ───────────────────────────────────────────────── */
+
+.login-gate {
+  margin: 2rem 0;
+  padding: 2rem 1.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  text-align: center;
+}
+
+.login-gate h3 {
+  margin-bottom: 0.7rem;
+}
+
+.login-gate .chapter-summary {
+  max-width: 28rem;
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.login-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.btn-provider {
+  min-width: 12rem;
+  justify-content: center;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.4rem;
+}
+
+.btn-google {
+  background: var(--paper);
+  border-color: var(--line-strong);
+}
+
+.btn-google:hover {
+  border-color: var(--sage);
+}
+
+/* 카카오 브랜드 색은 고정값이라 변수로 두지 않는다 (다크모드에서도 동일) */
+.btn-kakao {
+  background: #fee500;
+  border-color: #fee500;
+  color: #191600;
+}
+
+.btn-kakao:hover {
+  background: #f2d900;
+  border-color: #f2d900;
+}
+
+.me-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.2rem 0.6rem 0.2rem 0.25rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  transition: border-color 0.25s var(--ease);
+}
+
+.me-chip:hover {
+  border-color: var(--sage);
+}
+
+.me-avatar-sm {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.me-avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sage);
+  color: var(--paper);
+  font-size: 0.7rem;
+}
+
+.me-id {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+}
+
+.me-avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.2rem;
+}
+
+/* ── 사용량 ───────────────────────────────────────────────── */
+
+.usage-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0 2rem;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.usage-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.25rem 1rem;
+  background: var(--paper-raised);
+}
+
+.usage-num {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.usage-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
 /* ── 반응형 ───────────────────────────────────────────────── */
 
 @media (max-width: 640px) {

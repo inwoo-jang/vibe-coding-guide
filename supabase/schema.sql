@@ -15,11 +15,17 @@
 -- 별도 테이블을 만들어 1:1 로 붙입니다.
 
 create table if not exists public.profiles (
-  id          uuid primary key references auth.users(id) on delete cascade,
-  email       text,
-  is_admin    boolean not null default false,
-  created_at  timestamptz not null default now()
+  id            uuid primary key references auth.users(id) on delete cascade,
+  email         text,
+  display_name  text,          -- 구글/카카오에서 받아온 이름
+  avatar_url    text,          -- 프로필 사진
+  is_admin      boolean not null default false,
+  created_at    timestamptz not null default now()
 );
+
+-- 이미 만든 뒤에 이 파일을 다시 실행하는 경우를 위해
+alter table public.profiles add column if not exists display_name text;
+alter table public.profiles add column if not exists avatar_url text;
 
 
 -- ───────────────────────────────────────────────────────────────
@@ -66,6 +72,32 @@ create table if not exists public.progress (
 create index if not exists progress_user_idx on public.progress (user_id);
 
 
+-- ───────────────────────────────────────────────────────────────
+--  4. ai_usage — AI 호출 기록 (요금 추적)
+-- ───────────────────────────────────────────────────────────────
+-- 누가 언제 어떤 기능으로 토큰을 얼마나 썼는지.
+-- 서버(api/ai.js)가 OpenAI 응답을 받은 직후에 한 줄씩 넣는다.
+--
+-- ★ 이게 있어야 "내 사용량"과 "전체 사용량"을 말할 수 있다.
+--   브라우저 localStorage 로는 기기를 바꾸면 사라지고 합산도 안 된다.
+--
+-- 캐시로 재사용한 호출은 여기 들어오지 않는다 — OpenAI 를 부르지 않았으니
+-- 요금도 안 나갔기 때문이다. 그래서 이 표의 합이 곧 실제 청구액에 비례한다.
+
+create table if not exists public.ai_usage (
+  id             bigint generated always as identity primary key,
+  user_id        uuid not null references public.profiles(id) on delete cascade,
+  task           text not null,          -- kickoff / tailor / review / glossary
+  model          text,
+  input_tokens   integer not null default 0,
+  output_tokens  integer not null default 0,
+  created_at     timestamptz not null default now()
+);
+
+create index if not exists ai_usage_user_idx on public.ai_usage (user_id, created_at desc);
+create index if not exists ai_usage_created_idx on public.ai_usage (created_at desc);
+
+
 -- ═══════════════════════════════════════════════════════════════
 --  RLS — 여기부터가 진짜 보안입니다
 -- ═══════════════════════════════════════════════════════════════
@@ -80,6 +112,7 @@ create index if not exists progress_user_idx on public.progress (user_id);
 alter table public.profiles enable row level security;
 alter table public.projects enable row level security;
 alter table public.progress enable row level security;
+alter table public.ai_usage enable row level security;
 
 
 -- ── 함정 ① 무한 재귀 ──────────────────────────────────────────
@@ -161,11 +194,27 @@ create policy "관리자 진도 조회" on public.progress
   for select using (public.is_admin());
 
 
+-- ── ai_usage ──────────────────────────────────────────────────
+-- 본인 것만 읽고, 본인 것만 넣을 수 있다.
+-- update/delete 정책은 **일부러 만들지 않는다** — 정책이 없으면 거부다.
+-- 사용 기록은 지우거나 고칠 수 있으면 안 된다. 요금 근거이기 때문이다.
+drop policy if exists "본인 사용량 조회" on public.ai_usage;
+create policy "본인 사용량 조회" on public.ai_usage
+  for select using (auth.uid() = user_id or public.is_admin());
+
+drop policy if exists "본인 사용량 기록" on public.ai_usage;
+create policy "본인 사용량 기록" on public.ai_usage
+  for insert with check (auth.uid() = user_id);
+
+
 -- ═══════════════════════════════════════════════════════════════
 --  가입하면 profiles 줄이 자동으로 생기게
 -- ═══════════════════════════════════════════════════════════════
 -- 이게 없으면 로그인은 되는데 profiles 에 줄이 없어서 모든 게 실패합니다.
 
+-- 구글과 카카오가 주는 정보의 키 이름이 달라서 순서대로 찾아본다.
+--   구글  : name, avatar_url / picture
+--   카카오: name 또는 preferred_username, avatar_url 또는 picture
 create or replace function public.handle_new_user()
 returns trigger
 language plpgsql
@@ -173,9 +222,25 @@ security definer
 set search_path = public
 as $$
 begin
-  insert into public.profiles (id, email)
-  values (new.id, new.email)
-  on conflict (id) do nothing;
+  insert into public.profiles (id, email, display_name, avatar_url)
+  values (
+    new.id,
+    new.email,
+    coalesce(
+      new.raw_user_meta_data ->> 'name',
+      new.raw_user_meta_data ->> 'full_name',
+      new.raw_user_meta_data ->> 'preferred_username',
+      new.raw_user_meta_data ->> 'user_name'
+    ),
+    coalesce(
+      new.raw_user_meta_data ->> 'avatar_url',
+      new.raw_user_meta_data ->> 'picture'
+    )
+  )
+  on conflict (id) do update
+    set email        = coalesce(excluded.email, public.profiles.email),
+        display_name = coalesce(excluded.display_name, public.profiles.display_name),
+        avatar_url   = coalesce(excluded.avatar_url, public.profiles.avatar_url);
   return new;
 end;
 $$;
@@ -183,6 +248,12 @@ $$;
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
+  for each row execute function public.handle_new_user();
+
+-- 다시 로그인할 때 이름·사진이 바뀌었으면 따라 갱신한다.
+drop trigger if exists on_auth_user_updated on auth.users;
+create trigger on_auth_user_updated
+  after update on auth.users
   for each row execute function public.handle_new_user();
 
 
@@ -209,4 +280,12 @@ create trigger on_auth_user_created
 --  4. B 로 로그인한 채로:
 --       await supabase.from('profiles').update({ is_admin: true }).eq('id', <B의 id>)
 --     → 에러가 안 나도 괜찮습니다. 다시 조회해서 is_admin 이 여전히 false 면 성공입니다.
+--
+--  5. B 로 로그인한 채로 남의 사용량을 조회해봅니다:
+--       await supabase.from('ai_usage').select('*')
+--     → 자기 기록만 나와야 합니다.
+--
+--  6. B 로 자기 사용 기록을 지워봅니다 (요금을 숨기려는 시도):
+--       await supabase.from('ai_usage').delete().eq('user_id', <B의 id>)
+--     → 아무것도 안 지워져야 합니다. delete 정책을 일부러 안 만들었기 때문입니다.
 -- ═══════════════════════════════════════════════════════════════
