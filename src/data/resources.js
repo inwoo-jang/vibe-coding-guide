@@ -113,6 +113,65 @@ export const resourceGroups = [
   },
 
   {
+    id: 'infra-pro',
+    title: 'DB — 유료·실무용',
+    blurb:
+      '지금 볼 필요는 없습니다. 사용자가 늘거나 회사에서 쓸 때 여는 칸입니다. Supabase·Neon도 결국 이 위에서 돌아갑니다.',
+    chapter: 'data',
+    items: [
+      {
+        name: 'AWS RDS',
+        url: 'https://aws.amazon.com/rds/',
+        what: '관리형 Postgres·MySQL. 실무에서 가장 많이 쓰입니다. 설정할 게 많은 만큼 통제력도 큽니다',
+        note: '유료',
+      },
+      {
+        name: 'AWS Aurora',
+        url: 'https://aws.amazon.com/rds/aurora/',
+        what: 'AWS가 다시 만든 고성능 Postgres·MySQL. 규모가 커졌을 때',
+        note: '유료',
+      },
+      {
+        name: 'AWS DynamoDB',
+        url: 'https://aws.amazon.com/dynamodb/',
+        what: 'NoSQL. 아주 큰 트래픽에 강합니다',
+        note: '유료',
+      },
+      {
+        name: 'Google Cloud SQL',
+        url: 'https://cloud.google.com/sql',
+        what: '구글의 관리형 Postgres·MySQL',
+        note: '유료',
+      },
+      {
+        name: 'Supabase Pro',
+        url: 'https://supabase.com/pricing',
+        what: '월 $25. 일시정지 없음, 용량·백업 확대. 무료에서 가장 자연스러운 다음 단계',
+        note: '$25/월',
+        pick: true,
+      },
+      {
+        name: 'Neon 유료 플랜',
+        url: 'https://neon.com/pricing',
+        what: 'Postgres만 필요할 때. 브랜치 기능이 강점 (DB를 git처럼 복제)',
+        note: '$19~/월',
+      },
+      {
+        name: 'PlanetScale',
+        url: 'https://planetscale.com',
+        what: 'MySQL. 서비스를 멈추지 않고 스키마를 바꾸는 기능이 강점',
+        note: '$39~/월',
+      },
+      {
+        name: 'Firebase Blaze',
+        url: 'https://firebase.google.com/pricing',
+        what: '종량제. 쓴 만큼만 냅니다. 트래픽이 들쭉날쭉할 때',
+        note: '종량제',
+      },
+    ],
+  },
+
+  {
     id: 'reference',
     title: '레퍼런스 — 무드 잡을 때',
     blurb: '"어떤 느낌으로 만들지" 정할 때. AI에게 보여줄 예시를 여기서 고릅니다.',
