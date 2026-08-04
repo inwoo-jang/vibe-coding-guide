@@ -1340,7 +1340,6 @@ a {
   width: 1.4rem;
   height: 1.4rem;
   border-radius: 50%;
-  object-fit: cover;
   flex-shrink: 0;
 }
 
@@ -1365,7 +1364,7 @@ a {
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 50%;
-  object-fit: cover;
+  font-size: 1.1rem;
 }
 
 .footer-links {

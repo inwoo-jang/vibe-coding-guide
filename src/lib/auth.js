@@ -33,7 +33,7 @@ export function useAuth() {
       if (!user) return null
       const { data } = await supabase
         .from('profiles')
-        .select('id, email, display_name, avatar_url, is_admin')
+        .select('id, email, display_name, is_admin')
         .eq('id', user.id)
         .maybeSingle()
       return data ?? null

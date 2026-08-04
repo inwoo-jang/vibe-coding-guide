@@ -17,7 +17,7 @@ const nav = [
 export default function Layout() {
   const { active } = useProjects()
   const { doneCount, hasProject } = useProgress()
-  const { status, name, profile, isAdmin, isCloudMode } = useAuth()
+  const { status, name, isAdmin, isCloudMode } = useAuth()
   const pct = Math.round((doneCount / chapters.length) * 100)
 
   // 로그인하고 돌아왔는데 실패했으면 주소에 오류가 붙어 온다. 한 번만 읽는다.
@@ -59,11 +59,7 @@ export default function Layout() {
               확인하는 동안 "마이페이지"가 떠서 로그인 기능이 없는 것처럼 보인다. */}
           {signedIn ? (
             <Link to="/me" className="me-chip" title={isAdmin ? '관리자' : '마이페이지'}>
-              {profile?.avatar_url ? (
-                <img src={profile.avatar_url} alt="" className="me-avatar-sm" />
-              ) : (
-                <span className="me-avatar-sm me-avatar-fallback">{name.slice(0, 1)}</span>
-              )}
+              <span className="me-avatar-sm me-avatar-fallback">{name.slice(0, 1)}</span>
               <span className="chip-name">{name}</span>
             </Link>
           ) : status === 'loading' ? (

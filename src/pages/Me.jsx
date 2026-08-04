@@ -15,7 +15,7 @@ const TASK_LABEL = {
 }
 
 export default function Me() {
-  const { status, name, user, profile, signOut, isCloudMode, isAdmin } = useAuth()
+  const { status, name, user, signOut, isCloudMode, isAdmin } = useAuth()
   const { projects } = useProjects()
   const { countFor } = useProgress()
   const signedIn = status === 'signed-in'
@@ -61,8 +61,10 @@ export default function Me() {
       <header className="page-head">
         <h1>마이페이지</h1>
         {signedIn ? (
+          // 프로필 사진은 쓰지 않는다 — 구글·카카오에서 오는 이미지 주소가
+          // 만료되거나 바뀌면 깨진 이미지가 남는다. 이름 첫 글자로 충분하다.
           <div className="me-id">
-            {profile?.avatar_url && <img src={profile.avatar_url} alt="" className="me-avatar" />}
+            <span className="me-avatar me-avatar-fallback">{name.slice(0, 1)}</span>
             <span>
               <strong>{name}</strong>
               {user?.email && <span className="meta"> {user.email}</span>}
