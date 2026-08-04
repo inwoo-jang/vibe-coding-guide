@@ -3,6 +3,7 @@ import { chapters } from '../data/chapters'
 import { useProgress } from '../lib/progress'
 import { useProjects } from '../lib/projects'
 import { useAuth } from '../lib/auth'
+import SetupNotice from './SetupNotice'
 
 const nav = [
   { to: '/learn', label: '학습' },
@@ -47,6 +48,8 @@ export default function Layout() {
             </Link>
           )}
 
+          {/* 상태가 넷이다. loading 을 로컬 모드와 같이 묶으면
+              확인하는 동안 "마이페이지"가 떠서 로그인 기능이 없는 것처럼 보인다. */}
           {signedIn ? (
             <Link to="/me" className="me-chip" title={isAdmin ? '관리자' : '마이페이지'}>
               {profile?.avatar_url ? (
@@ -56,18 +59,22 @@ export default function Layout() {
               )}
               <span className="chip-name">{name}</span>
             </Link>
+          ) : status === 'loading' ? (
+            <span className="btn btn-ghost is-loading">확인 중…</span>
           ) : signedOut ? (
-            <Link to="/me" className="btn btn-ghost">
+            <Link to="/me" className="btn btn-primary">
               로그인
             </Link>
           ) : (
-            // 로컬 모드 — 로그인 개념이 없다
+            // 로컬 모드 — Supabase 미설정. 로그인 개념이 없다
             <Link to="/me" className="btn btn-ghost">
               마이페이지
             </Link>
           )}
         </div>
       </header>
+
+      <SetupNotice />
 
       <main className="main">
         <Outlet />

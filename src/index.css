@@ -1220,6 +1220,51 @@ a {
   border-bottom: 1px solid currentColor;
 }
 
+/* ── 설정 점검 띠 (개발 중에만) ───────────────────────────── */
+
+.setup-notice {
+  display: block;
+  padding: 1rem clamp(1.25rem, 5vw, 3.5rem);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--paper-sunk);
+  font-size: 0.85rem;
+  word-break: keep-all;
+}
+
+.setup-notice strong {
+  color: var(--clay);
+  margin-right: 0.6rem;
+}
+
+.setup-dev {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink-faint);
+}
+
+.setup-notice ul {
+  margin: 0.7rem 0 0.5rem;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.setup-notice li {
+  padding: 0.15rem 0;
+}
+
+.setup-notice .ai-hint {
+  margin: 0;
+}
+
+.is-loading {
+  opacity: 0.55;
+  cursor: default;
+}
+
 /* ── 로그인 ───────────────────────────────────────────────── */
 
 .login-gate {

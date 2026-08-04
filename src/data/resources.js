@@ -50,6 +50,32 @@ export const resourceGroups = [
   },
 
   {
+    id: 'docs',
+    title: '문법 찾아보기',
+    blurb:
+      'AI가 쓴 코드에 모르는 게 나왔을 때 검색하는 곳. 전부 외울 필요는 없고, 찾는 법만 알면 됩니다.',
+    chapter: 'build',
+    items: [
+      {
+        name: 'MDN Web Docs',
+        url: 'https://developer.mozilla.org/ko/',
+        what: 'HTML·CSS·JavaScript 의 표준 설명서. 태그·속성·함수 이름을 그대로 검색하면 됩니다. 브라우저 만드는 곳들이 함께 관리해서 가장 정확합니다',
+        pick: true,
+      },
+      {
+        name: 'Can I use',
+        url: 'https://caniuse.com',
+        what: '"이 기능 써도 되나?" 를 확인합니다. 어떤 브라우저에서 되는지 표로 보여줍니다',
+      },
+      {
+        name: 'DevDocs',
+        url: 'https://devdocs.io',
+        what: 'MDN·React·Node 등 여러 문서를 한 곳에서 빠르게 검색. 인터넷 없이도 쓸 수 있게 저장됩니다',
+      },
+    ],
+  },
+
+  {
     id: 'database',
     title: 'DB·백엔드',
     blurb:
@@ -204,12 +230,21 @@ export const resourceGroups = [
     chapter: 'design',
     items: [
       {
-        name: 'Happy Hues',
-        url: 'https://www.happyhues.co',
-        what: '팔레트를 실제 화면에 적용한 예시와 함께 보여줍니다. 색만 나열된 사이트보다 고르기 쉽습니다',
+        name: 'Coolors',
+        url: 'https://coolors.co/palettes/trending',
+        what: '팔레트는 여기서 고르세요. 스페이스바로 계속 새 조합을 뽑고, 마음에 드는 색은 잠가두고 나머지만 다시 뽑을 수 있습니다',
         pick: true,
       },
-      { name: 'Coolors', url: 'https://coolors.co/palettes/trending', what: '팔레트 생성·트렌딩' },
+      {
+        name: 'HTML Color Codes',
+        url: 'https://htmlcolorcodes.com',
+        what: '색 하나의 코드값이 필요할 때. 색 이름·HEX·RGB를 서로 바꿔주고, 밝기 단계도 보여줍니다',
+      },
+      {
+        name: 'Happy Hues',
+        url: 'https://www.happyhues.co',
+        what: '팔레트를 실제 화면에 적용한 예시와 함께 보여줍니다. "이 색을 어디에 쓰지?"가 막힐 때',
+      },
       { name: 'Adobe Color', url: 'https://color.adobe.com', what: '컬러휠 기반 조합' },
       { name: 'Color Hunt', url: 'https://colorhunt.co', what: '큐레이션 팔레트' },
     ],
