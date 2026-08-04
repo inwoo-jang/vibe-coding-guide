@@ -26,6 +26,19 @@ export default function Me() {
   // 로그인했으면 서버 기록이 정답, 로컬 모드면 브라우저 카운터가 정답.
   const usage = signedIn ? server : local
 
+  // 확인 중에는 "로컬 모드"라고 말하면 안 된다.
+  // 로그인하고 막 돌아온 순간이 여기라서, 실패한 것처럼 보인다.
+  if (isCloudMode && status === 'loading') {
+    return (
+      <div className="page page-narrow">
+        <header className="page-head">
+          <h1>마이페이지</h1>
+          <p className="placeholder">로그인 확인 중…</p>
+        </header>
+      </div>
+    )
+  }
+
   if (isCloudMode && status === 'signed-out') {
     return (
       <div className="page page-narrow">
@@ -60,6 +73,7 @@ export default function Me() {
             </button>
           </div>
         ) : (
+          // 여기까지 왔다는 건 Supabase 자체가 설정 안 된 로컬 모드라는 뜻이다
           <p className="notice">
             <strong>로컬 모드</strong>입니다. Supabase 가 설정되지 않아 기록이 이 브라우저에만
             저장됩니다. 기기를 바꾸면 초기화됩니다.

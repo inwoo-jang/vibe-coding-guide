@@ -2,7 +2,8 @@ import { NavLink, Outlet, Link } from 'react-router-dom'
 import { chapters } from '../data/chapters'
 import { useProgress } from '../lib/progress'
 import { useProjects } from '../lib/projects'
-import { useAuth } from '../lib/auth'
+import { useEffect, useState } from 'react'
+import { useAuth, readRedirectError } from '../lib/auth'
 import SetupNotice from './SetupNotice'
 
 const nav = [
@@ -18,6 +19,12 @@ export default function Layout() {
   const { doneCount, hasProject } = useProgress()
   const { status, name, profile, isAdmin, isCloudMode } = useAuth()
   const pct = Math.round((doneCount / chapters.length) * 100)
+
+  // 로그인하고 돌아왔는데 실패했으면 주소에 오류가 붙어 온다. 한 번만 읽는다.
+  const [loginError, setLoginError] = useState(null)
+  useEffect(() => {
+    setLoginError(readRedirectError())
+  }, [])
 
   const signedIn = status === 'signed-in'
   const signedOut = isCloudMode && status === 'signed-out'
@@ -73,6 +80,22 @@ export default function Layout() {
           )}
         </div>
       </header>
+
+      {loginError && (
+        <aside className="setup-notice">
+          <strong>로그인에 실패했습니다</strong>
+          <ul>
+            <li>
+              <b>{loginError.code}</b>
+              {loginError.description && ` — ${loginError.description}`}
+            </li>
+            {loginError.hint && <li>{loginError.hint}</li>}
+          </ul>
+          <button type="button" className="linkish" onClick={() => setLoginError(null)}>
+            닫기
+          </button>
+        </aside>
+      )}
 
       <SetupNotice />
 

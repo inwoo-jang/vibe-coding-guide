@@ -1,5 +1,14 @@
 import { useEffect, useState } from 'react'
 import { supabase, isCloudMode } from '../lib/supabase'
+import { useAuth } from '../lib/auth'
+
+// 로그인 상태를 사람 말로
+const STATUS_LABEL = {
+  loading: '확인 중…',
+  'signed-in': '로그인됨',
+  'signed-out': '로그아웃 상태',
+  local: '로컬 모드 (Supabase 미설정)',
+}
 
 // 개발 중에만 뜨는 설정 점검 띠.
 //
@@ -16,6 +25,7 @@ const CACHE_KEY = 'vcg.setup.v1'
 
 export default function SetupNotice() {
   const [missing, setMissing] = useState(null)
+  const { status, name, user } = useAuth()
 
   useEffect(() => {
     // 개발 중 + Supabase 설정됨 일 때만 확인한다
@@ -71,19 +81,31 @@ export default function SetupNotice() {
     }
   }, [])
 
-  if (!missing || missing.length === 0) return null
+  if (!import.meta.env.DEV) return null
+
+  const gaps = missing ?? []
+  // 로그인이 됐고 빠진 설정도 없으면 띠를 띄울 이유가 없다
+  if (gaps.length === 0 && status === 'signed-in') return null
 
   return (
     <aside className="setup-notice">
-      <strong>설정이 덜 끝났습니다</strong>
+      <strong>{gaps.length > 0 ? '설정이 덜 끝났습니다' : '개발 정보'}</strong>
       <span className="setup-dev">개발 중에만 보입니다</span>
+
+      {/* 로그인이 됐는지 화면에서 바로 알 수 있어야 한다.
+          이게 없으면 "로그인이 된 건지 아닌지"조차 알 수 없어서 엉뚱한 데를 고치게 된다. */}
       <ul>
-        {missing.map((m) => (
+        <li>
+          <b>로그인 상태</b> — {STATUS_LABEL[status] ?? status}
+          {status === 'signed-in' && ` (${name}${user?.email ? ` · ${user.email}` : ''})`}
+        </li>
+        {gaps.map((m) => (
           <li key={m.what}>
             <b>{m.what}</b> — {m.how}
           </li>
         ))}
       </ul>
+
       <span className="ai-hint">
         터미널에서 <code className="inline-code">npm run check-supabase</code> 로도 확인할 수
         있습니다. 자세히는 docs/10-로그인-설정.md

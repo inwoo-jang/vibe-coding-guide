@@ -98,6 +98,40 @@ export function useAuth() {
   }
 }
 
+/**
+ * 로그인하고 돌아왔을 때 주소에 붙어 오는 오류를 읽는다.
+ *
+ * 구글에서 돌아오는 길이 막히면 Supabase 가 주소에 ?error=... 를 붙여서 보낸다.
+ * 이걸 안 읽으면 화면은 멀쩡한데 로그인만 안 된 것처럼 보인다.
+ * (오류가 물음표 뒤에 올 때도 있고 # 뒤에 올 때도 있어서 둘 다 본다.)
+ *
+ * 한 번 읽고 나면 주소를 깨끗하게 지운다 — 새로고침할 때마다 다시 뜨면 곤란하다.
+ */
+export function readRedirectError() {
+  if (typeof window === 'undefined') return null
+  const q = new URLSearchParams(window.location.search)
+  const h = new URLSearchParams(window.location.hash.replace(/^#/, ''))
+  const code = q.get('error') ?? h.get('error')
+  if (!code) return null
+
+  const desc = q.get('error_description') ?? h.get('error_description') ?? ''
+
+  // 주소에서 오류 흔적을 지운다 (뒤로가기 기록도 더럽히지 않게 replaceState)
+  const clean = window.location.pathname
+  window.history.replaceState({}, '', clean)
+
+  // 자주 나오는 것들은 사람 말로 바꿔준다
+  let hint = ''
+  if (/exchange external code/i.test(desc)) {
+    hint = 'Supabase 의 Client Secret 이 구글에 등록된 값과 다릅니다. 새로 발급받아 교체하세요.'
+  } else if (/redirect/i.test(desc) || code === 'access_denied') {
+    hint =
+      'Supabase → Authentication → URL Configuration 의 Redirect URLs 에 이 주소를 추가하세요.'
+  }
+
+  return { code, description: desc.replace(/\+/g, ' '), hint }
+}
+
 /** 지금 로그인한 사용자의 액세스 토큰. /api/ai 호출에 붙인다. */
 export async function getAccessToken() {
   if (!isCloudMode) return null
