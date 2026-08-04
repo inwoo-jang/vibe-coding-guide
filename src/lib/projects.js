@@ -17,8 +17,15 @@ const LOCAL_KEY = 'vcg.projects.v1'
 const ACTIVE_KEY = 'vcg.activeProject.v1'
 const EVENT = 'vcg:projects'
 
-function broadcast() {
+// 화면들에게 "다시 읽어라"만 알린다 (데이터는 그대로)
+function notify() {
   window.dispatchEvent(new Event(EVENT))
+}
+
+// 데이터가 실제로 바뀐 경우 — 캐시를 버리고 알린다
+function broadcast() {
+  invalidate()
+  notify()
 }
 
 // ── 로컬 저장 ──────────────────────────────────────────────────
@@ -45,11 +52,44 @@ function readActiveId() {
 function writeActiveId(id) {
   if (id) localStorage.setItem(ACTIVE_KEY, id)
   else localStorage.removeItem(ACTIVE_KEY)
-  broadcast()
+  // 목록 자체는 안 바뀌었으므로 캐시를 버리지 않는다.
+  // 여기서 버리면 프로젝트를 전환할 때마다 목록을 다시 읽는다.
+  notify()
 }
 
 function newLocalId() {
   return `p_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`
+}
+
+// ── 같은 요청을 여러 번 보내지 않는다 ──────────────────────────
+//
+// useProjects() 는 화면·레이아웃·progress 등 여러 곳에서 불린다.
+// 각자 fetch 하면 한 화면을 여는 데만 목록을 네 번씩 읽는다.
+// 그래서 (1) 결과를 모듈에 caching 하고 (2) 진행 중인 요청은 같이 기다린다.
+// auth.js 의 "확인 중…" 이 느렸던 것과 같은 원인이다.
+let cache = null // 마지막으로 읽어온 목록
+let inflight = null // 지금 날아가고 있는 요청
+
+async function fetchProjects() {
+  if (inflight) return inflight // 이미 누가 요청했으면 그걸 기다린다
+  inflight = supabase
+    .from('projects')
+    .select('id, name, one_liner, idea, prd, created_at')
+    .order('created_at', { ascending: true })
+    .then(({ data, error }) => {
+      if (error) console.error('[projects] 불러오기 실패', error)
+      cache = (data ?? []).map(fromRow)
+      return cache
+    })
+    .finally(() => {
+      inflight = null
+    })
+  return inflight
+}
+
+/** 저장 후 캐시를 버린다 — 다음 조회가 새로 읽게 */
+function invalidate() {
+  cache = null
 }
 
 // DB 컬럼(snake_case)과 화면에서 쓰는 이름(camelCase)을 맞춰준다.
@@ -68,9 +108,10 @@ export function useProjects() {
   const { status, user } = useAuth()
   const cloud = isCloudMode && status === 'signed-in'
 
-  const [items, setItems] = useState(() => (isCloudMode ? [] : readLocal().items))
+  // 캐시가 있으면 그걸로 시작한다 — 화면을 옮길 때마다 빈 목록이 스쳐 보이지 않게
+  const [items, setItems] = useState(() => (isCloudMode ? (cache ?? []) : readLocal().items))
   const [activeIdRaw, setActiveIdRaw] = useState(readActiveId)
-  const [loading, setLoading] = useState(isCloudMode)
+  const [loading, setLoading] = useState(isCloudMode && cache === null)
 
   // 저장소에서 다시 읽어온다.
   const refresh = useCallback(async () => {
@@ -82,17 +123,14 @@ export function useProjects() {
     }
     if (!cloud) {
       // 로그인 안 함 → 보여줄 게 없다
+      cache = null
       setItems([])
       setLoading(false)
       return
     }
-    setLoading(true)
-    const { data, error } = await supabase
-      .from('projects')
-      .select('id, name, one_liner, idea, prd, created_at')
-      .order('created_at', { ascending: true })
-    if (error) console.error('[projects] 불러오기 실패', error)
-    setItems((data ?? []).map(fromRow))
+    if (cache === null) setLoading(true)
+    const list = await fetchProjects()
+    setItems(list)
     setActiveIdRaw(readActiveId())
     setLoading(false)
   }, [cloud])
@@ -137,6 +175,7 @@ export function useProjects() {
           return null
         }
         const project = fromRow(data)
+        invalidate()
         writeActiveId(project.id) // 만들면 바로 그 프로젝트로 전환
         return project
       }

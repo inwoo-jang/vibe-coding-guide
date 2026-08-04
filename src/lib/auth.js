@@ -6,7 +6,7 @@
 // 로그인은 **쓰기와 AI 기능에만** 필요하다. 챕터 본문·프롬프트·용어는
 // 로그인 없이 전부 읽힌다. 링크를 받자마자 로그인 벽이 뜨면 거기서 이탈한다.
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 import { supabase, isCloudMode } from './supabase'
 
 const PROVIDERS = {
@@ -16,50 +16,78 @@ const PROVIDERS = {
 
 export const providerList = Object.values(PROVIDERS)
 
-export function useAuth() {
-  // status: 'loading' | 'signed-in' | 'signed-out' | 'local'
-  //   local = Supabase 미설정. 로그인 개념 자체가 없는 모드
-  const [state, setState] = useState(() =>
-    isCloudMode ? { status: 'loading', user: null, profile: null } : { status: 'local', user: null, profile: null },
-  )
+// ── 로그인 상태는 앱 전체에서 하나만 둔다 ──────────────────────
+//
+// 처음에는 useAuth() 안에서 useState + useEffect 로 각자 관리했다.
+// 그런데 이 훅을 화면·레이아웃·projects·progress 등 여러 곳에서 부르다 보니
+// **한 화면에서만 8~10개의 사본**이 생겼고, 각각이 세션 조회와 profiles 질의를
+// 따로 날렸다. 그게 다 끝나야 "확인 중…" 이 사라져서 체감이 아주 느렸다.
+//
+// 그래서 모듈 수준에 하나만 두고 모두가 구독한다.
+// 네트워크 호출은 앱 전체에서 한 번뿐이다.
 
-  useEffect(() => {
-    if (!isCloudMode) return
-    let alive = true
+// status: 'loading' | 'signed-in' | 'signed-out' | 'local'
+//   local = Supabase 미설정. 로그인 개념 자체가 없는 모드
+let state = isCloudMode
+  ? { status: 'loading', user: null, profile: null }
+  : { status: 'local', user: null, profile: null }
 
-    // profiles 행에서 is_admin 을 읽어온다.
-    // 화면 가리기용이고, 진짜 차단은 DB 의 RLS 가 한다.
-    async function loadProfile(user) {
-      if (!user) return null
-      const { data } = await supabase
-        .from('profiles')
-        .select('id, email, display_name, is_admin')
-        .eq('id', user.id)
-        .maybeSingle()
-      return data ?? null
-    }
+const listeners = new Set()
 
-    async function sync(session) {
-      const user = session?.user ?? null
-      if (!user) {
-        if (alive) setState({ status: 'signed-out', user: null, profile: null })
-        return
-      }
-      const profile = await loadProfile(user)
-      if (alive) setState({ status: 'signed-in', user, profile })
-    }
+function setState(next) {
+  state = { ...state, ...next }
+  listeners.forEach((fn) => fn())
+}
 
-    supabase.auth.getSession().then(({ data }) => sync(data.session))
+function subscribe(fn) {
+  listeners.add(fn)
+  return () => listeners.delete(fn)
+}
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      sync(session)
+// profiles 행에서 is_admin 과 표시 이름을 읽어온다.
+// 화면 가리기용이고, 진짜 차단은 DB 의 RLS 가 한다.
+async function loadProfile(user) {
+  const { data } = await supabase
+    .from('profiles')
+    .select('id, email, display_name, is_admin')
+    .eq('id', user.id)
+    .maybeSingle()
+  return data ?? null
+}
+
+function sync(session) {
+  const user = session?.user ?? null
+  if (!user) {
+    setState({ status: 'signed-out', user: null, profile: null })
+    return
+  }
+
+  // ★ 프로필을 기다리지 않고 먼저 로그인 상태로 바꾼다 ★
+  // 세션만 있으면 로그인은 이미 끝난 것이다. profiles 질의는 이름과
+  // 관리자 여부를 채우는 부가 정보라, 이걸 기다리면 화면이 괜히 멈춰 보인다.
+  setState({ status: 'signed-in', user })
+
+  loadProfile(user)
+    .then((profile) => {
+      // 그 사이 로그아웃했으면 덮어쓰지 않는다
+      if (state.user?.id === user.id) setState({ profile })
     })
+    .catch(() => {
+      /* 프로필을 못 읽어도 로그인 자체는 유효하다 */
+    })
+}
 
-    return () => {
-      alive = false
-      sub.subscription.unsubscribe()
-    }
-  }, [])
+if (isCloudMode) {
+  supabase.auth.getSession().then(({ data }) => sync(data.session))
+  supabase.auth.onAuthStateChange((_event, session) => sync(session))
+}
+
+export function useAuth() {
+  const snap = useSyncExternalStore(
+    subscribe,
+    () => state,
+    () => state, // 서버 렌더링은 하지 않지만 형식을 맞춰둔다
+  )
 
   const signIn = useCallback(async (provider) => {
     if (!isCloudMode) return { error: new Error('Supabase 가 설정되지 않았습니다.') }
@@ -80,20 +108,20 @@ export function useAuth() {
   }, [])
 
   return {
-    ...state,
+    ...snap,
     signIn,
     signOut,
     isCloudMode,
     /** 로그인이 필요한 동작을 할 수 있는 상태인가 */
-    canWrite: state.status === 'signed-in' || state.status === 'local',
+    canWrite: snap.status === 'signed-in' || snap.status === 'local',
     /** 로그인 안내를 띄워야 하는 상태인가 */
-    needsLogin: state.status === 'signed-out',
-    isAdmin: Boolean(state.profile?.is_admin),
+    needsLogin: snap.status === 'signed-out',
+    isAdmin: Boolean(snap.profile?.is_admin),
     /** 화면에 보여줄 이름 */
     name:
-      state.profile?.display_name ||
-      state.user?.user_metadata?.name ||
-      state.user?.email?.split('@')[0] ||
+      snap.profile?.display_name ||
+      snap.user?.user_metadata?.name ||
+      snap.user?.email?.split('@')[0] ||
       '나',
   }
 }
