@@ -187,6 +187,8 @@ export function useProgress(projectId) {
     hasProject: Boolean(id),
     /** 체크할 수 있는 상태인가 */
     canWrite: !isCloudMode || cloud,
+    /** 아직 로그인 여부를 확인하는 중인가 */
+    authLoading: isCloudMode && status === 'loading',
     /** 여러 프로젝트의 완료 개수 — 목록·관리자 화면용 */
     countFor: (pid) => Object.keys(all[pid] ?? {}).length,
     mapFor: (pid) => all[pid] ?? EMPTY,

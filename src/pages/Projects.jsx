@@ -8,7 +8,8 @@ import AiPanel from '../components/AiPanel'
 import LoginGate from '../components/LoginGate'
 
 export default function Projects() {
-  const { projects, activeId, create, remove, setActive, canWrite, loading } = useProjects()
+  const { projects, activeId, create, remove, setActive, canWrite, loading, authLoading } =
+    useProjects()
   const { countFor } = useAllProgress()
   const navigate = useNavigate()
 
@@ -47,8 +48,12 @@ export default function Projects() {
         </p>
       </header>
 
-      {/* 로그인 안 했으면 만들기 대신 안내를 보여준다 */}
-      {!canWrite ? (
+      {/* 로그인 확인이 끝나기 전에는 아무 판단도 하지 않는다.
+          여기서 로그인 화면을 그리면, 이미 로그인한 사람에게도
+          로그인 화면이 잠깐 스쳐 지나간다. */}
+      {authLoading ? (
+        <p className="placeholder">불러오는 중…</p>
+      ) : !canWrite ? (
         <LoginGate
           title="로그인하면 내 프로젝트를 만들 수 있습니다"
           reason="진도와 기획서가 계정에 저장돼서 다른 기기에서 열어도 그대로입니다. 챕터 본문과 프롬프트는 로그인 없이 계속 읽을 수 있습니다."

@@ -12,7 +12,7 @@ import AiPanel from '../components/AiPanel'
 export default function Chapter() {
   const { chapterId } = useParams()
   const chapter = chapterById[chapterId]
-  const { isDone, setDone, hasProject, canWrite } = useProgress()
+  const { isDone, setDone, hasProject, canWrite, authLoading } = useProgress()
   const { active } = useProjects()
   const review = useAiTask('review')
 
@@ -107,7 +107,7 @@ export default function Chapter() {
         actionLabel="점검표 만들기"
         task={review}
         onRun={runReview}
-        disabled={!active || !canWrite}
+        disabled={!active || !canWrite || authLoading}
         disabledReason={
           !canWrite ? (
             <>
@@ -138,7 +138,9 @@ export default function Chapter() {
       </AiPanel>
 
       <div className="chapter-done">
-        {!canWrite ? (
+        {authLoading ? (
+          <p className="ai-hint">로그인 확인 중…</p>
+        ) : !canWrite ? (
           <p className="ai-hint">
             진도를 기록하려면 로그인이 필요합니다.{' '}
             <Link to="/me">로그인하러 가기 →</Link>

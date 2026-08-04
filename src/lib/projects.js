@@ -241,6 +241,10 @@ export function useProjects() {
     loading,
     /** 프로젝트를 만들 수 있는 상태인가 (로컬 모드거나 로그인했거나) */
     canWrite: !isCloudMode || cloud,
+    /** 아직 로그인 여부를 확인하는 중인가.
+        이걸 구분하지 않으면 확인하는 동안 "로그아웃"으로 보여서
+        로그인 화면이 잠깐 스쳐 지나간다. */
+    authLoading: isCloudMode && status === 'loading',
     create,
     update,
     remove,
