@@ -6,6 +6,7 @@ import { useAiTask } from '../lib/ai'
 import { projectContext, useProjects } from '../lib/projects'
 import PromptCard from '../components/PromptCard'
 import Prose from '../components/Prose'
+import { inline } from '../components/inline'
 import AiPanel from '../components/AiPanel'
 
 export default function Chapter() {
@@ -86,7 +87,7 @@ export default function Chapter() {
                     <a href={it.url} target="_blank" rel="noreferrer noopener">
                       {it.name}
                     </a>
-                    <span className="chapter-summary">{it.what}</span>
+                    <span className="chapter-summary">{inline(it.what)}</span>
                   </li>
                 ))}
               </ul>

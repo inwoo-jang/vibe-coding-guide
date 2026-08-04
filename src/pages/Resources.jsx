@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { resourceGroups, resourceCount } from '../data/resources'
 import { chapterById } from '../data/chapters'
+import { inline } from '../components/inline'
 
 export default function Resources() {
   const [q, setQ] = useState('')
@@ -20,7 +21,7 @@ export default function Resources() {
   return (
     <div className="page">
       <header className="page-head">
-        <h1>참고 자료</h1>
+        <h1>참고 소스</h1>
         <p className="lede">
           기획할 때 쓰는 도구와, 만든 결과물이 <strong>AI가 찍어낸 것처럼 보이지 않게</strong> 해줄
           레퍼런스·에셋 모음입니다. 총 {resourceCount}개.
@@ -72,7 +73,7 @@ export default function Resources() {
                       {it.pick && <span className="tag tag-done">추천</span>}
                       {it.note && <span className="res-note">{it.note}</span>}
                     </span>
-                    <span className="res-what">{it.what}</span>
+                    <span className="res-what">{inline(it.what)}</span>
                     <span className="res-host">{hostOf(it.url)}</span>
                   </a>
                 </li>

@@ -1,4 +1,4 @@
-// 참고 자료 — 링크 모음.
+// 참고 소스 — 링크 모음.
 //
 // ★ 여기에 계속 이어 붙이면 됩니다 ★
 //
@@ -23,6 +23,99 @@
 //   chapter 관련 챕터 id — 챕터에서 이 그룹으로 링크가 걸린다 (선택)
 
 export const resourceGroups = [
+  {
+    id: 'services',
+    title: '개발 서비스 — 계정 만들고 키 받는 곳',
+    blurb:
+      '대시보드에 들어가서 계정을 만들거나 키를 받아오는 곳들. 코드로는 못 하고 사람이 클릭해야 하는 일들입니다.',
+    chapter: 'deploy',
+    items: [
+      {
+        name: 'GitHub',
+        url: 'https://github.com',
+        what: '코드를 인터넷에 보관하고 되돌릴 수 있게 합니다. 배포도 여기 연결해서 합니다',
+        note: '무료',
+        pick: true,
+      },
+      {
+        name: 'Vercel',
+        url: 'https://vercel.com/dashboard',
+        what: 'GitHub 저장소를 연결하면 push 할 때마다 자동 배포. 환경변수도 여기서 넣습니다',
+        note: '무료',
+        pick: true,
+      },
+      {
+        name: 'Supabase',
+        url: 'https://supabase.com/dashboard',
+        what: 'DB·로그인·파일저장. SQL Editor, 로그인 제공자 설정, 사용자 목록이 다 여기 있습니다',
+        note: '무료 시작',
+      },
+      {
+        name: 'OpenAI Platform',
+        url: 'https://platform.openai.com/api-keys',
+        what: 'AI 기능용 API 키를 발급받는 곳. **월 사용 한도를 꼭 걸어두세요** — 마지막 안전장치입니다',
+        note: '유료',
+      },
+      {
+        name: 'Google Cloud Console',
+        url: 'https://console.cloud.google.com/apis/credentials',
+        what: '구글 로그인을 붙일 때 OAuth 클라이언트를 만드는 곳. 여기서 받은 ID·Secret 을 Supabase 에 넣습니다',
+      },
+      {
+        name: 'Kakao Developers',
+        url: 'https://developers.kakao.com/console/app',
+        what: '카카오 로그인용. 앱 키의 **REST API 키**를 씁니다 (앱 ID 숫자가 아닙니다)',
+      },
+      {
+        name: 'Cloudflare',
+        url: 'https://dash.cloudflare.com',
+        what: '도메인을 샀을 때 연결하는 곳. 무료 플랜으로도 속도·보안이 붙습니다',
+      },
+    ],
+  },
+
+  {
+    id: 'devtools',
+    title: '개발 도구',
+    blurb: '만들면서 확인하고 시험할 때 쓰는 것들.',
+    chapter: 'build',
+    items: [
+      {
+        name: 'Postman',
+        url: 'https://www.postman.com',
+        what: 'API 를 화면 없이 직접 호출해보는 도구. "서버가 잘못인가 화면이 잘못인가"를 가릅니다. 회원가입 없이 쓰는 데스크톱 앱도 있습니다',
+        note: '무료',
+        pick: true,
+      },
+      {
+        name: 'Hoppscotch',
+        url: 'https://hoppscotch.io',
+        what: 'Postman 과 같은 일을 브라우저에서 바로. 설치가 부담스러우면 이쪽',
+        note: '무료·오픈소스',
+      },
+      {
+        name: 'JSON Formatter',
+        url: 'https://jsonformatter.org',
+        what: '한 줄로 뭉친 JSON 을 읽을 수 있게 펴줍니다. API 응답 볼 때',
+      },
+      {
+        name: 'regex101',
+        url: 'https://regex101.com',
+        what: '정규식이 뭘 잡는지 눈으로 확인. AI가 준 정규식을 검증할 때 유용합니다',
+      },
+      {
+        name: 'Squoosh',
+        url: 'https://squoosh.app',
+        what: '이미지 용량 줄이기. 사진을 그대로 올리면 사이트가 느려집니다',
+      },
+      {
+        name: 'TinyPNG',
+        url: 'https://tinypng.com',
+        what: 'PNG·JPG 를 여러 장 한 번에 줄일 때',
+      },
+    ],
+  },
+
   {
     id: 'planning',
     title: '기획 도구',
