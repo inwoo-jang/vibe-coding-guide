@@ -24,6 +24,106 @@
 
 export const resourceGroups = [
   {
+    id: 'ai-coding',
+    title: 'AI 코딩 도구',
+    blurb: '코드를 대신 써주는 도구. 하나만 골라서 시작하세요 — 고르느라 시간 쓰는 게 제일 아깝습니다.',
+    chapter: 'setup',
+    items: [
+      {
+        name: 'Cursor',
+        url: 'https://cursor.com',
+        what: '에디터 안에서 대화합니다. 바뀐 부분이 색으로 보여서 **무슨 일이 일어났는지 확인하기 가장 쉽습니다.** 처음이라면 이쪽',
+        note: 'AI · 무료 있음',
+        pick: true,
+      },
+      {
+        name: 'Claude Code',
+        url: 'https://claude.com/claude-code',
+        what: '터미널에서 대화하는 방식(CLI). 파일 여러 개에 걸친 작업과 긴 대화에 강합니다. 에디터 확장으로도 씁니다',
+        note: 'AI · 유료',
+      },
+      {
+        name: 'Codex',
+        url: 'https://openai.com/codex',
+        what: 'OpenAI 의 코딩 에이전트. ChatGPT 유료 구독에 포함돼서, 이미 쓰고 계시면 추가 비용이 없습니다',
+        note: 'AI · 구독 포함',
+      },
+      {
+        name: 'GitHub Copilot',
+        url: 'https://github.com/features/copilot',
+        what: '에디터에서 다음 줄을 제안해줍니다. 학생은 무료입니다',
+        note: 'AI',
+      },
+      {
+        name: 'Windsurf',
+        url: 'https://windsurf.com',
+        what: 'Cursor 와 비슷한 에디터형',
+        note: 'AI',
+      },
+    ],
+  },
+
+  {
+    id: 'ai-image',
+    title: 'AI 이미지·에셋 만들기',
+    blurb:
+      '사진·일러스트가 필요한데 마땅한 게 없을 때. 다만 ⚠️ AI 이미지는 오히려 "AI가 만든 티"를 키울 수 있습니다 — 설계 챕터의 체크리스트대로 실사 사진이나 판화를 섞는 편이 나을 때가 많습니다. 그리고 서비스마다 상업적 이용 조건이 다르니 쓰기 전에 확인하세요.',
+    chapter: 'design',
+    items: [
+      {
+        name: 'ChatGPT (이미지)',
+        url: 'https://chatgpt.com',
+        what: '대화하면서 고쳐나가기 제일 편합니다. "좀 더 어둡게" 처럼 말로 수정됩니다. 이미 구독 중이면 추가 비용 없음',
+        note: 'AI · 구독 포함',
+        pick: true,
+      },
+      {
+        name: 'Ideogram',
+        url: 'https://ideogram.ai',
+        what: '**이미지 안에 글자를 제대로 씁니다.** 배너·포스터처럼 텍스트가 들어가야 할 때. 다른 도구는 글자가 뭉개집니다',
+        note: 'AI · 무료 있음',
+        pick: true,
+      },
+      {
+        name: 'Recraft',
+        url: 'https://www.recraft.ai',
+        what: '**SVG(벡터)로 뽑아줍니다.** 아이콘·일러스트를 만들 때. 확대해도 안 깨지고 색도 코드로 바꿀 수 있습니다',
+        note: 'AI · 무료 있음',
+      },
+      {
+        name: 'Midjourney',
+        url: 'https://www.midjourney.com',
+        what: '결과물 완성도가 가장 높다는 평이 많습니다. 대신 유료이고 프롬프트를 익혀야 합니다',
+        note: 'AI · 유료',
+      },
+      {
+        name: 'Adobe Firefly',
+        url: 'https://firefly.adobe.com',
+        what: '학습 데이터 출처를 밝혀서 **상업적 사용이 비교적 안전**합니다. 회사 일에 쓸 때 고려',
+        note: 'AI',
+      },
+      {
+        name: 'remove.bg',
+        url: 'https://www.remove.bg',
+        what: '사진 배경을 지웁니다. 인물·제품 사진을 화면에 얹을 때',
+        note: 'AI · 무료 있음',
+      },
+      {
+        name: 'Upscayl',
+        url: 'https://upscayl.org',
+        what: '흐릿한 이미지를 선명하게 키웁니다. 설치형이고 오픈소스라 무료입니다',
+        note: 'AI · 오픈소스',
+      },
+      {
+        name: 'Vectorizer.AI',
+        url: 'https://vectorizer.ai',
+        what: '이미 있는 이미지를 SVG(벡터)로 바꿉니다. 로고를 다시 받을 수 없을 때',
+        note: 'AI',
+      },
+    ],
+  },
+
+  {
     id: 'services',
     title: '개발 서비스 — 계정 만들고 키 받는 곳',
     blurb:
@@ -54,7 +154,7 @@ export const resourceGroups = [
         name: 'OpenAI Platform',
         url: 'https://platform.openai.com/api-keys',
         what: 'AI 기능용 API 키를 발급받는 곳. **월 사용 한도를 꼭 걸어두세요** — 마지막 안전장치입니다',
-        note: '유료',
+        note: 'AI · 유료',
       },
       {
         name: 'Google Cloud Console',
@@ -126,7 +226,7 @@ export const resourceGroups = [
         name: 'Manifest',
         url: 'https://manyfast.io',
         what: 'PRD·기능명세·유저플로우·와이어프레임을 한 화면에서. AI와 대화하며 다듬고 Cursor·Claude Code에 MCP로 바로 연결됩니다',
-        note: '한국어',
+        note: 'AI · 한국어',
         pick: true,
       },
       {
