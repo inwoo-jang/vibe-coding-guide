@@ -22,6 +22,12 @@
     sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
 
+  /* 라틴 문자 가독성용 자간.
+     한글은 글자폭이 넓어 자간이 없어도 되지만, 영문은 조금 벌려야 읽힌다.
+     디스플레이 글꼴을 바꾸고 싶으면 --font-display 한 줄만 고치면 된다.
+     대안: 'Newsreader', 'Fraunces', 'Bricolage Grotesque' (참고 소스 → 무료 폰트) */
+  --track-latin: 0.015em;
+
   --radius: 4px;
   --measure: 34rem;
   --wide: 62rem;
@@ -60,7 +66,7 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.75;
-  letter-spacing: -0.003em;
+  letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -91,7 +97,7 @@ h3 {
   font-family: var(--font-display);
   font-weight: 400;
   line-height: 1.24;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.01em;
   margin: 0;
   word-break: keep-all;
 }
@@ -142,8 +148,8 @@ a {
 
 .brand {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  letter-spacing: -0.01em;
+  font-size: 1.24rem;
+  letter-spacing: 0.02em;
   white-space: nowrap;
 }
 
@@ -352,7 +358,7 @@ a {
 
 .stage-num {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.73rem;
   color: var(--ink-faint);
 }
 
@@ -426,6 +432,7 @@ a {
 .chapter-title {
   font-family: var(--font-display);
   font-size: 1.28rem;
+  letter-spacing: 0.015em;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -452,7 +459,7 @@ a {
 
 .tag {
   font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.1rem 0.5rem;
@@ -535,7 +542,7 @@ a {
 }
 
 .prompt-context {
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -594,7 +601,8 @@ a {
 
 .glossary dt {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1.08rem;
+  letter-spacing: 0.015em;
   word-break: keep-all;
 }
 
@@ -706,7 +714,7 @@ a {
 .table th {
   text-align: left;
   font-weight: 400;
-  font-size: 0.68rem;
+  font-size: 0.73rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -826,7 +834,7 @@ a {
 
 .ai-badge {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   padding: 0.1rem 0.4rem;
   border: 1px solid var(--sage-soft);
@@ -990,7 +998,8 @@ a {
   align-items: center;
   gap: 0.6rem;
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.22rem;
+  letter-spacing: 0.015em;
   word-break: keep-all;
 }
 
@@ -1028,6 +1037,7 @@ a {
 .prd h3 {
   font-family: var(--font-display);
   font-size: 1.35rem;
+  letter-spacing: 0.012em;
   margin-bottom: 0.6rem;
 }
 
@@ -1047,7 +1057,7 @@ a {
 }
 
 .prd-key {
-  font-size: 0.68rem;
+  font-size: 0.73rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -1164,7 +1174,7 @@ a {
 
 .res-note {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   letter-spacing: 0.06em;
   padding: 0.1rem 0.4rem;
   border: 1px solid var(--line-strong);
@@ -1181,7 +1191,7 @@ a {
 
 .res-host {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.73rem;
   color: var(--ink-faint);
   white-space: nowrap;
 }
@@ -1238,7 +1248,7 @@ a {
 
 .setup-dev {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
   padding: 0.1rem 0.45rem;
   border: 1px solid var(--line-strong);
@@ -1401,7 +1411,7 @@ a {
 }
 
 .usage-label {
-  font-size: 0.68rem;
+  font-size: 0.73rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-faint);
