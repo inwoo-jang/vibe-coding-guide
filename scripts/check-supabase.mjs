@@ -72,15 +72,49 @@ if (alive) {
   }
 
   // ③ 로그인 제공자
+  //
+  // 토글만 보면 안 된다. /auth/v1/settings 는 "켜져 있나"만 알려주고
+  // Client Secret 이 채워졌는지는 알려주지 않는다.
+  // 실제로 로그인을 시작해봐야 "missing OAuth secret" 같은 게 잡힌다.
+  // (실제로 이걸 놓쳐서 "켜짐"으로 보이는데 로그인이 안 되는 일이 있었다.)
   try {
     const r = await fetch(`${URL_}/auth/v1/settings`, { headers })
     const s = await r.json()
     const ext = s.external ?? {}
+
     for (const p of ['google', 'kakao']) {
-      if (ext[p]) console.log(ok(`${p} 로그인 켜짐`))
-      else {
+      if (!ext[p]) {
         console.log(no(`${p} 로그인 꺼짐`))
-        todo.push(`Authentication → Providers 에서 ${p} 켜고 키 입력`)
+        todo.push(`Authentication → Providers 에서 ${p} 켜고 Client ID·Secret 입력`)
+        continue
+      }
+
+      // 켜져 있다면 진짜 되는지 시작까지 해본다
+      const probe = await fetch(
+        `${URL_}/auth/v1/authorize?provider=${p}&redirect_to=http%3A%2F%2Flocalhost`,
+        { redirect: 'manual' },
+      )
+      if (probe.status >= 300 && probe.status < 400) {
+        console.log(ok(`${p} 로그인 — 정상 (구글/카카오로 이동됨)`))
+        continue
+      }
+      let msg = ''
+      try {
+        msg = (await probe.json()).msg ?? ''
+      } catch {
+        /* 본문이 없을 수도 있다 */
+      }
+      console.log(no(`${p} 로그인 — 켜져 있지만 동작 안 함: ${msg || probe.status}`))
+      if (/secret/i.test(msg)) {
+        todo.push(
+          `${p}: Client Secret 이 비어 있습니다. ` +
+            `Google Cloud Console → 사용자 인증 정보 → OAuth 클라이언트에서 보안 비밀번호를 복사해 ` +
+            `Supabase → Authentication → Providers → ${p} 의 Client Secret 에 넣고 Save`,
+        )
+      } else if (/client|id/i.test(msg)) {
+        todo.push(`${p}: Client ID 를 확인하세요 — ${msg}`)
+      } else {
+        todo.push(`${p}: ${msg || '설정을 다시 확인하세요'}`)
       }
     }
   } catch {
