@@ -175,6 +175,66 @@ export const resourceGroups = [
   },
 
   {
+    id: 'ui-kit',
+    title: 'UI 컴포넌트 라이브러리',
+    blurb:
+      '버튼·표·달력·모달을 직접 만들지 않고 가져다 쓰는 것. ⚠️ **내 프레임워크에 맞는 걸 골라야 합니다** — React 프로젝트에 Vue 라이브러리는 아예 안 붙습니다.',
+    chapter: 'build',
+    items: [
+      {
+        name: 'Ant Design',
+        url: 'https://ant.design/components/overview',
+        what: '표·폼·달력까지 없는 게 없습니다. 관리자 화면처럼 기능이 많은 화면에 강합니다. 문서에 예제 코드가 잘 정리돼 있어서 그대로 복사해 쓰기 좋습니다',
+        note: 'React',
+        pick: true,
+      },
+      {
+        name: 'Buefy',
+        url: 'https://buefy.org/documentation/start',
+        what: 'Bulma CSS 기반의 Vue 컴포넌트. 가볍고 배우기 쉽습니다',
+        note: 'Vue',
+      },
+      {
+        name: 'shadcn/ui',
+        url: 'https://ui.shadcn.com',
+        what: '설치하는 게 아니라 **코드를 내 프로젝트에 복사해 넣습니다.** 그래서 마음대로 뜯어고칠 수 있고, AI 도구가 특히 잘 다룹니다',
+        note: 'React',
+        pick: true,
+      },
+      {
+        name: 'MUI (Material UI)',
+        url: 'https://mui.com/material-ui/all-components/',
+        what: '가장 많이 쓰여서 예제와 질문이 압도적으로 많습니다. 대신 구글 머티리얼 느낌이 강하게 납니다',
+        note: 'React',
+      },
+      {
+        name: 'Vuetify',
+        url: 'https://vuetifyjs.com/en/components/all/',
+        what: 'Vue 쪽에서 가장 큰 컴포넌트 모음',
+        note: 'Vue',
+      },
+      {
+        name: 'Tailwind CSS',
+        url: 'https://tailwindcss.com',
+        what: '컴포넌트가 아니라 **스타일 조각**을 클래스로 붙이는 방식. 프레임워크를 안 가립니다. AI가 아주 잘 씁니다',
+        note: '공통',
+      },
+      {
+        name: 'daisyUI',
+        url: 'https://daisyui.com/components/',
+        what: 'Tailwind 위에 버튼·카드 같은 완성형 클래스를 얹어줍니다. Tailwind 가 손에 안 익을 때',
+        note: '공통',
+      },
+      {
+        name: 'Headless UI',
+        url: 'https://headlessui.com',
+        what: '**모양 없이 동작만** 주는 컴포넌트(드롭다운·모달 등). 디자인은 내가 하고 싶을 때. AI티를 피하기에 좋습니다',
+        note: 'React · Vue',
+      },
+    ],
+  },
+
+  {
     id: 'devtools',
     title: '개발 도구',
     blurb: '만들면서 확인하고 시험할 때 쓰는 것들.',
