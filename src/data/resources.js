@@ -49,6 +49,13 @@ export const resourceGroups = [
         note: 'AI · 구독 포함',
       },
       {
+        name: 'v0',
+        url: 'https://v0.app',
+        what: '말로 설명하면 **화면을 통째로 만들어줍니다**(shadcn/ui + Tailwind 코드). 다른 사람이 만든 템플릿을 구경할 수 있어서 **"이런 느낌" 을 찾을 때 레퍼런스로도 좋습니다.** 첫 화면을 빠르게 세울 때',
+        note: 'AI · 무료 있음',
+        pick: true,
+      },
+      {
         name: 'GitHub Copilot',
         url: 'https://github.com/features/copilot',
         what: '에디터에서 다음 줄을 제안해줍니다. 학생은 무료입니다',
@@ -199,6 +206,13 @@ export const resourceGroups = [
         url: 'https://ui.shadcn.com',
         what: '설치하는 게 아니라 **코드를 내 프로젝트에 복사해 넣습니다.** 그래서 마음대로 뜯어고칠 수 있고, AI 도구가 특히 잘 다룹니다',
         note: 'React',
+        pick: true,
+      },
+      {
+        name: 'tweakcn',
+        url: 'https://tweakcn.com',
+        what: 'shadcn/ui 의 색·폰트·모서리를 **화면에서 눈으로 보며 바꾸고**, 결과를 CSS 변수로 뽑아 붙여넣습니다. shadcn 기본값 그대로 쓰면 티가 나는데 그걸 가장 빠르게 벗어나는 방법입니다',
+        note: 'shadcn/ui 전용',
         pick: true,
       },
       {
@@ -473,6 +487,12 @@ export const resourceGroups = [
       { name: 'Refero', url: 'https://refero.design', what: 'UI 패턴별 실사례 검색' },
       { name: 'Awwwards', url: 'https://www.awwwards.com', what: '인터랙션 강한 사이트' },
       { name: 'Lapa Ninja', url: 'https://www.lapa.ninja', what: '랜딩페이지 모음' },
+      {
+        name: 'v0 템플릿',
+        url: 'https://v0.app',
+        what: '남이 만든 화면을 구경하고, 마음에 들면 그 코드를 바로 가져올 수 있습니다. 위 사이트들과 달리 **완성된 사이트가 아니라 만들 수 있는 화면**을 봅니다',
+        note: 'AI',
+      },
     ],
   },
 
