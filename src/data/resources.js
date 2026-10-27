@@ -497,6 +497,38 @@ export const resourceGroups = [
   },
 
   {
+    id: 'reference-product',
+    title: '레퍼런스 — 제품 화면 짤 때',
+    blurb: '대시보드·목록·상세·설정처럼 "실제로 쓰는 화면"을 만들 때. 위 무드 사이트가 겉모습이라면 여기는 화면 흐름입니다.',
+    chapter: 'design',
+    items: [
+      {
+        name: 'Mobbin',
+        url: 'https://mobbin.com',
+        what: '실제 서비스의 **화면 흐름**을 단계별로 봅니다. 검색어: Review, Workspace, Dashboard',
+        note: '일부 무료',
+        pick: true,
+      },
+      {
+        name: 'SaaSFrame',
+        url: 'https://www.saasframe.io',
+        what: 'B2B SaaS 화면 모음. 검색어: Dashboard, Detail, Settings',
+      },
+      {
+        name: 'Figma Community',
+        url: 'https://www.figma.com/community',
+        what: '**편집 가능한** 디자인과 컴포넌트를 복제해서 뜯어볼 수 있습니다. 검색어: Enterprise SaaS, Review Workspace',
+        note: '파일마다 라이선스 확인',
+      },
+      {
+        name: 'Behance',
+        url: 'https://www.behance.net',
+        what: '완성도 높은 디자인 사례. 검색어: Enterprise Product Design',
+      },
+    ],
+  },
+
+  {
     id: 'color',
     title: '색 조합',
     blurb: '색을 세 개만 고르면 됩니다. 많을수록 어려워집니다.',
