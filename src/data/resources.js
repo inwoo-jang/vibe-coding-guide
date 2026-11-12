@@ -485,6 +485,11 @@ export const resourceGroups = [
       { name: 'Godly', url: 'https://godly.website', what: '고퀄 웹사이트 큐레이션' },
       { name: 'Land-book', url: 'https://land-book.com', what: '실제 웹 스크린샷 아카이브' },
       { name: 'Refero', url: 'https://refero.design', what: 'UI 패턴별 실사례 검색' },
+      {
+        name: 'Refero Styles',
+        url: 'https://styles.refero.design',
+        what: 'Refero의 별도 스타일 라이브러리. 사이트별 **색·서체·간격과 DESIGN.md**를 줘서, AI에게 디자인 기준을 그대로 넘기기 좋습니다',
+      },
       { name: 'Awwwards', url: 'https://www.awwwards.com', what: '인터랙션 강한 사이트' },
       { name: 'Lapa Ninja', url: 'https://www.lapa.ninja', what: '랜딩페이지 모음' },
       {
@@ -513,6 +518,11 @@ export const resourceGroups = [
         name: 'SaaSFrame',
         url: 'https://www.saasframe.io',
         what: 'B2B SaaS 화면 모음. 검색어: Dashboard, Detail, Settings',
+      },
+      {
+        name: 'Nicelydone',
+        url: 'https://nicelydone.club',
+        what: '실제 SaaS의 **화면·사용 흐름·컴포넌트** 모음. 목록·상세·검토 화면을 찾기에 잘 맞습니다',
       },
       {
         name: 'Figma Community',
