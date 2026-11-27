@@ -96,12 +96,12 @@ export default function SetupNotice() {
           이게 없으면 "로그인이 된 건지 아닌지"조차 알 수 없어서 엉뚱한 데를 고치게 된다. */}
       <ul>
         <li>
-          <b>로그인 상태</b> — {STATUS_LABEL[status] ?? status}
+          <b>로그인 상태</b>: {STATUS_LABEL[status] ?? status}
           {status === 'signed-in' && ` (${name}${user?.email ? ` · ${user.email}` : ''})`}
         </li>
         {gaps.map((m) => (
           <li key={m.what}>
-            <b>{m.what}</b> — {m.how}
+            <b>{m.what}</b>: {m.how}
           </li>
         ))}
       </ul>

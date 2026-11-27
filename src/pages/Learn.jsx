@@ -19,7 +19,7 @@ export default function Learn() {
         {/* 어느 프로젝트의 진도인지 항상 밝힌다. 안 그러면 체크가 어디에 남는지 모른다. */}
         {hasProject ? (
           <p className="meta">
-            <Link to={`/projects/${active.id}`}>{active.name}</Link> — {doneCount} /{' '}
+            <Link to={`/projects/${active.id}`}>{active.name}</Link> · {doneCount} /{' '}
             {chapters.length} 단계 완료
           </p>
         ) : (

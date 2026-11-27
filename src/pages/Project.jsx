@@ -94,7 +94,7 @@ export default function Project() {
           <h2>이 프로젝트의 기획서</h2>
           <PrdView prd={project.prd} />
           <p className="ai-hint">
-            AI가 뽑은 초안입니다. 실제로 만들다 보면 달라집니다 — 그게 정상입니다.
+            AI가 뽑은 초안입니다. 실제로 만들다 보면 달라집니다. 그게 정상입니다.
           </p>
         </section>
       ) : (

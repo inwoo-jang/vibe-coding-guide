@@ -77,7 +77,7 @@ export default function Admin() {
 
       {/* ── AI 사용량 (요금) ──────────────────────────────── */}
       <section>
-        <h2>AI 사용량 — 전체</h2>
+        <h2>AI 사용량 (전체)</h2>
         {usage.loading ? (
           <p className="placeholder">불러오는 중…</p>
         ) : (
@@ -158,7 +158,7 @@ export default function Admin() {
           </>
         )}
         <p className="ai-hint">
-          캐시로 재사용한 호출은 세지 않습니다 — OpenAI 를 부르지 않아 요금이 나가지 않았기
+          캐시로 재사용한 호출은 세지 않습니다. OpenAI 를 부르지 않아 요금이 나가지 않았기
           때문입니다. 그래서 이 합이 실제 청구액에 비례합니다.
         </p>
       </section>

@@ -188,7 +188,7 @@ export function PrdView({ prd }) {
           <ul className="prose-list">
             {prd.mustHave.map((f, i) => (
               <li key={i}>
-                <strong>{f.title}</strong> — {f.why}
+                <strong>{f.title}</strong>: {f.why}
               </li>
             ))}
           </ul>
@@ -201,7 +201,7 @@ export function PrdView({ prd }) {
           <ul className="prose-list muted">
             {prd.notNow.map((f, i) => (
               <li key={i}>
-                <strong>{f.title}</strong> — {f.why}
+                <strong>{f.title}</strong>: {f.why}
               </li>
             ))}
           </ul>
@@ -214,14 +214,14 @@ export function PrdView({ prd }) {
           <ul className="prose-list">
             {prd.screens.map((s, i) => (
               <li key={i}>
-                <strong>{s.name}</strong> — {s.does}
+                <strong>{s.name}</strong>: {s.does}
               </li>
             ))}
           </ul>
         </>
       )}
 
-      {prd.firstStep && <p className="notice">지금 할 일 — {prd.firstStep}</p>}
+      {prd.firstStep && <p className="notice">지금 할 일: {prd.firstStep}</p>}
     </div>
   )
 }

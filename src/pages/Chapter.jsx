@@ -111,7 +111,7 @@ export default function Chapter() {
         disabledReason={
           !canWrite ? (
             <>
-              AI 기능은 로그인한 사람만 쓸 수 있습니다 — 호출할 때마다 요금이 나가기 때문입니다.{' '}
+              AI 기능은 로그인한 사람만 쓸 수 있습니다. 호출할 때마다 요금이 나가기 때문입니다.{' '}
               <Link to="/me">로그인하러 가기 →</Link>
             </>
           ) : (

@@ -7,10 +7,11 @@ import { useAuth, readRedirectError } from '../lib/auth'
 import SetupNotice from './SetupNotice'
 
 const nav = [
+  // 참고 소스를 제일 자주 연다. 그래서 맨 앞
+  { to: '/resources', label: '참고 소스' },
   { to: '/learn', label: '학습' },
   { to: '/projects', label: '내 프로젝트' },
   { to: '/prompts', label: '프롬프트 사전' },
-  { to: '/resources', label: '참고 소스' },
   { to: '/glossary', label: '용어 사전' },
 ]
 
@@ -48,7 +49,7 @@ export default function Layout() {
             <Link
               to={`/projects/${active.id}`}
               className="progress-chip"
-              title={`${active.name} — ${doneCount}/${chapters.length} 완료`}
+              title={`${active.name} · ${doneCount}/${chapters.length} 완료`}
             >
               <span className="chip-name">{active.name}</span>
               {pct}%
@@ -83,7 +84,7 @@ export default function Layout() {
           <ul>
             <li>
               <b>{loginError.code}</b>
-              {loginError.description && ` — ${loginError.description}`}
+              {loginError.description && `: ${loginError.description}`}
             </li>
             {loginError.hint && <li>{loginError.hint}</li>}
           </ul>
@@ -100,7 +101,7 @@ export default function Layout() {
       </main>
 
       <footer className="footer">
-        <span>바이브코딩 가이드 — 초보를 위한 8단계</span>
+        <span>바이브코딩 가이드 · 초보를 위한 8단계</span>
         <span className="footer-links">
           <Link to="/me">마이페이지</Link>
           {(isAdmin || !isCloudMode) && <Link to="/admin">관리자</Link>}

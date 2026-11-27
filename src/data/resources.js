@@ -21,13 +21,13 @@
 //   title   보이는 제목 (필수)
 //   blurb   이 분류를 언제 여는지 한 줄 (선택)
 //   chapter 관련 챕터 id — 챕터에서 이 그룹으로 링크가 걸린다 (선택)
-//   fold    true 면 접힌 채로 시작한다. 항목이 많은 분류에 (선택)
 
 export const resourceGroups = [
   {
     id: 'ai-coding',
+    tab: 'tools',
     title: 'AI 코딩 도구',
-    blurb: '코드를 대신 써주는 도구. 하나만 골라서 시작하세요 — 고르느라 시간 쓰는 게 제일 아깝습니다.',
+    blurb: '코드를 대신 써주는 도구. 하나만 골라서 시작하세요. 고르느라 시간 쓰는 게 제일 아깝습니다.',
     chapter: 'setup',
     items: [
       {
@@ -73,9 +73,10 @@ export const resourceGroups = [
 
   {
     id: 'ai-image',
+    tab: 'tools',
     title: 'AI 이미지·에셋 만들기',
     blurb:
-      '사진·일러스트가 필요한데 마땅한 게 없을 때. 다만 ⚠️ AI 이미지는 오히려 "AI가 만든 티"를 키울 수 있습니다 — 설계 챕터의 체크리스트대로 실사 사진이나 판화를 섞는 편이 나을 때가 많습니다. 그리고 서비스마다 상업적 이용 조건이 다르니 쓰기 전에 확인하세요.',
+      '사진·일러스트가 필요한데 마땅한 게 없을 때. 다만 ⚠️ AI 이미지는 오히려 "AI가 만든 티"를 키울 수 있습니다. 설계 챕터의 체크리스트대로 실사 사진이나 판화를 섞는 편이 나을 때가 많습니다. 그리고 서비스마다 상업적 이용 조건이 다르니 쓰기 전에 확인하세요.',
     chapter: 'design',
     items: [
       {
@@ -133,7 +134,8 @@ export const resourceGroups = [
 
   {
     id: 'services',
-    title: '개발 서비스 — 계정 만들고 키 받는 곳',
+    tab: 'tools',
+    title: '개발 서비스 (계정·키 받는 곳)',
     blurb:
       '대시보드에 들어가서 계정을 만들거나 키를 받아오는 곳들. 코드로는 못 하고 사람이 클릭해야 하는 일들입니다.',
     chapter: 'deploy',
@@ -161,7 +163,7 @@ export const resourceGroups = [
       {
         name: 'OpenAI Platform',
         url: 'https://platform.openai.com/api-keys',
-        what: 'AI 기능용 API 키를 발급받는 곳. **월 사용 한도를 꼭 걸어두세요** — 마지막 안전장치입니다',
+        what: 'AI 기능용 API 키를 발급받는 곳. **월 사용 한도를 꼭 걸어두세요**. 마지막 안전장치입니다',
         note: 'AI · 유료',
       },
       {
@@ -184,9 +186,10 @@ export const resourceGroups = [
 
   {
     id: 'ui-kit',
+    tab: 'assets',
     title: 'UI 컴포넌트 라이브러리',
     blurb:
-      '버튼·표·달력·모달을 직접 만들지 않고 가져다 쓰는 것. ⚠️ **내 프레임워크에 맞는 걸 골라야 합니다** — React 프로젝트에 Vue 라이브러리는 아예 안 붙습니다.',
+      '버튼·표·달력·모달을 직접 만들지 않고 가져다 쓰는 것. ⚠️ **내 프레임워크에 맞는 걸 골라야 합니다**. React 프로젝트에 Vue 라이브러리는 아예 안 붙습니다.',
     chapter: 'build',
     items: [
       {
@@ -251,6 +254,7 @@ export const resourceGroups = [
 
   {
     id: 'devtools',
+    tab: 'tools',
     title: '개발 도구',
     blurb: '만들면서 확인하고 시험할 때 쓰는 것들.',
     chapter: 'build',
@@ -293,6 +297,7 @@ export const resourceGroups = [
 
   {
     id: 'planning',
+    tab: 'tools',
     title: '기획 도구',
     blurb: '아이디어를 문서로 만들 때. 01 기획 단계에서 씁니다.',
     chapter: 'planning',
@@ -319,6 +324,7 @@ export const resourceGroups = [
 
   {
     id: 'docs',
+    tab: 'tools',
     title: '문법 찾아보기',
     blurb:
       'AI가 쓴 코드에 모르는 게 나왔을 때 검색하는 곳. 전부 외울 필요는 없고, 찾는 법만 알면 됩니다.',
@@ -345,9 +351,10 @@ export const resourceGroups = [
 
   {
     id: 'database',
+    tab: 'tools',
     title: 'DB·백엔드',
     blurb:
-      '초보는 "백엔드 통째로(BaaS)" 쪽에서 고르세요 — 로그인까지 들어 있습니다. 04 데이터 단계.',
+      '초보는 "백엔드 통째로(BaaS)" 쪽에서 고르세요. 로그인까지 들어 있습니다. 04 데이터 단계.',
     chapter: 'data',
     items: [
       {
@@ -408,7 +415,8 @@ export const resourceGroups = [
 
   {
     id: 'infra-pro',
-    title: 'DB — 유료·실무용',
+    tab: 'tools',
+    title: 'DB 유료·실무용',
     blurb:
       '지금 볼 필요는 없습니다. 사용자가 늘거나 회사에서 쓸 때 여는 칸입니다. Supabase·Neon도 결국 이 위에서 돌아갑니다.',
     chapter: 'data',
@@ -465,87 +473,223 @@ export const resourceGroups = [
     ],
   },
 
+  // ── 레퍼런스 탭 (tab: 'refs') ───────────────────────────────
+  // 항목마다 platform / parts / style 태그를 붙인다. 값은 파일 맨 아래 refDims 에서 고른다.
   {
     id: 'reference',
-    title: '레퍼런스 — 무드 잡을 때',
+    tab: 'refs',
+    short: '무드 아카이브',
+    title: '레퍼런스: 무드 잡을 때',
     blurb: '"어떤 느낌으로 만들지" 정할 때. AI에게 보여줄 예시를 여기서 고릅니다.',
     chapter: 'design',
     items: [
       {
-        name: 'SiteInspire',
-        url: 'https://www.siteinspire.com',
-        what: '웹 디자인 큐레이션',
-      },
-      {
         name: 'Minimal Gallery',
         url: 'https://minimal.gallery',
         what: '미니멀 사이트 모음',
-        note: '이 사이트의 무드도 여기서 골랐습니다',
+        note: '이 사이트 첫 무드를 여기서 골랐습니다',
         pick: true,
+        platform: ['웹'], parts: ['랜딩', '포트폴리오·블로그'], style: ['미니멀'],
       },
-      { name: 'Godly', url: 'https://godly.website', what: '고퀄 웹사이트 큐레이션' },
-      { name: 'Land-book', url: 'https://land-book.com', what: '실제 웹 스크린샷 아카이브' },
-      { name: 'Refero', url: 'https://refero.design', what: 'UI 패턴별 실사례 검색' },
       {
-        name: 'Refero Styles',
-        url: 'https://styles.refero.design',
-        what: 'Refero의 별도 스타일 라이브러리. 사이트별 **색·서체·간격과 DESIGN.md**를 줘서, AI에게 디자인 기준을 그대로 넘기기 좋습니다',
+        name: 'SiteInspire',
+        url: 'https://www.siteinspire.com',
+        what: '웹 디자인 큐레이션. 스타일·업종별로 걸러 볼 수 있습니다',
+        platform: ['웹'], parts: ['랜딩', '포트폴리오·블로그'], style: ['미니멀', '에디토리얼'],
       },
-      { name: 'Awwwards', url: 'https://www.awwwards.com', what: '인터랙션 강한 사이트' },
-      { name: 'Lapa Ninja', url: 'https://www.lapa.ninja', what: '랜딩페이지 모음' },
       {
-        name: 'v0 템플릿',
-        url: 'https://v0.app',
-        what: '남이 만든 화면을 구경하고, 마음에 들면 그 코드를 바로 가져올 수 있습니다. 위 사이트들과 달리 **완성된 사이트가 아니라 만들 수 있는 화면**을 봅니다',
-        note: 'AI',
+        name: 'Godly',
+        url: 'https://godly.website',
+        what: '완성도 높은 웹사이트 큐레이션. 움직임이 많은 사이트가 많습니다',
+        platform: ['웹'], parts: ['랜딩'], style: ['굵은·실험적', '3D·모션'],
+      },
+      {
+        name: 'Land-book',
+        url: 'https://land-book.com',
+        what: '실제 웹 스크린샷 아카이브',
+        platform: ['웹'], parts: ['랜딩', '포트폴리오·블로그'], style: [],
+      },
+      {
+        name: 'Lapa Ninja',
+        url: 'https://www.lapa.ninja',
+        what: '랜딩페이지 모음',
+        platform: ['웹'], parts: ['랜딩'], style: [],
+      },
+      {
+        name: 'Awwwards',
+        url: 'https://www.awwwards.com',
+        what: '인터랙션이 강한 사이트. 매일 하나씩 "오늘의 사이트"를 뽑습니다',
+        platform: ['웹'], parts: ['랜딩', '포트폴리오·블로그', '인터랙션'], style: ['굵은·실험적', '3D·모션'],
+      },
+    ],
+  },
+
+  {
+    id: 'reference-app',
+    tab: 'refs',
+    short: '앱 화면',
+    title: '레퍼런스: 앱 화면 짤 때',
+    blurb:
+      '폰 앱 화면을 만들 때. 실제 출시된 앱을 모은 곳(Mobbin, Page Flows, WWIT)이 제일 믿을 만합니다. Collect UI·Dribbble 은 시안 위주라 실제로 쓰기 불편한 화면도 섞여 있습니다.',
+    chapter: 'design',
+    items: [
+      {
+        name: 'Mobbin',
+        url: 'https://mobbin.com',
+        what: '실제 서비스의 **화면 흐름**을 단계별로 봅니다. 앱 레퍼런스는 여기가 제일 많습니다',
+        note: '일부 무료',
+        pick: true,
+        platform: ['앱', '웹'], parts: ['온보딩·로그인', '목록·상세', '설정·폼', '대시보드'], style: ['실서비스 UI'],
+        kw: 'Onboarding, Review, Workspace, Dashboard',
+      },
+      {
+        name: 'WWIT',
+        url: 'https://wwit.design',
+        what: '**한국 앱** 화면을 패턴(로그인·회원가입·온보딩·주문/결제·설정)과 컴포넌트(바텀시트·탭·팝업·차트)별로 모았습니다. 네이버페이, 삼쩜삼, 헤이딜러 같은 앱이 있습니다',
+        pick: true,
+        platform: ['앱'], parts: ['온보딩·로그인', '목록·상세', '설정·폼'], style: ['실서비스 UI'],
+        kw: '온보딩, 결제, 바텀시트',
+      },
+      {
+        name: '유아이볼 (UI Bowl)',
+        url: 'https://uibowl.io',
+        what: '한국 앱·웹 화면 모음. UI 패턴 가이드가 있고, 사용자 수(MAU) 순으로 정렬할 수 있습니다. 피그마로 가져가는 플러그인도 있습니다',
+        note: '일부 무료',
+        platform: ['앱', '웹'], parts: ['온보딩·로그인', '목록·상세', '설정·폼', '대시보드'], style: ['실서비스 UI'],
+      },
+      {
+        name: 'Page Flows',
+        url: 'https://pageflows.com',
+        what: '가입·결제·구독 취소 같은 **흐름을 영상과 화면으로** 녹화해 둔 곳. iOS·안드로이드·웹 다 있습니다. 예전 Screenlane 이 여기로 합쳐졌습니다',
+        note: '유료',
+        platform: ['앱', '웹'], parts: ['온보딩·로그인', '설정·폼', '목록·상세'], style: ['실서비스 UI'],
+        kw: 'onboarding, sign up, paywall, checkout',
+      },
+      {
+        name: 'ScreensDesign',
+        url: 'https://screensdesign.com',
+        what: 'iOS 앱 화면, 온보딩 흐름, **결제 유도 화면(페이월)**, 앱스토어 스크린샷 모음. 예전 Scrnshts 가 여기로 바뀌었습니다',
+        note: '일부 무료',
+        platform: ['앱'], parts: ['온보딩·로그인', '설정·폼'], style: ['실서비스 UI'],
+        kw: 'paywall, onboarding, app store screenshots',
+      },
+      {
+        name: 'Spotted in Prod',
+        url: 'https://www.spottedinprod.com',
+        what: 'iOS 앱의 **작은 움직임**(제스처, 전환, 탭바 반응)을 짧은 영상으로 모았습니다',
+        platform: ['앱'], parts: ['인터랙션'], style: ['실서비스 UI', '3D·모션'],
+        kw: 'gesture, tab bar, transition',
+      },
+      {
+        name: 'Pttrns',
+        url: 'https://www.pttrns.com',
+        what: 'iOS 화면을 패턴별로 한 장씩. 무료지만 최근 업데이트는 뜸합니다',
+        platform: ['앱'], parts: ['온보딩·로그인', '목록·상세', '설정·폼'], style: ['실서비스 UI'],
+        kw: 'login, profile, settings, empty state',
+      },
+      {
+        name: 'Collect UI',
+        url: 'https://collectui.com',
+        what: '화면 종류별 디자인 시안 모음(Daily UI). 실제 앱이 아니라 시안이라 아이디어용으로만',
+        platform: ['앱', '웹'], parts: ['온보딩·로그인', '설정·폼', '목록·상세'], style: ['일러스트·손그림'],
+        kw: 'sign up, checkout, settings, calendar',
+      },
+      {
+        name: 'Dribbble (mobile app)',
+        url: 'https://dribbble.com/tags/mobile_app',
+        what: '디자이너들이 올린 앱 시안. 예쁘지만 실제로 쓰기 불편한 화면도 많습니다',
+        platform: ['앱'], parts: ['온보딩·로그인', '목록·상세', '대시보드'], style: [],
+      },
+      {
+        name: 'Apple Human Interface Guidelines',
+        url: 'https://developer.apple.com/design/human-interface-guidelines',
+        what: '아이폰 앱의 **공식 규칙**. 탭바·내비게이션·폼을 어떻게 두는지 정답이 여기 있습니다',
+        platform: ['앱'], parts: ['목록·상세', '설정·폼'], style: ['실서비스 UI'],
+      },
+      {
+        name: 'Material Design 3',
+        url: 'https://m3.material.io',
+        what: '안드로이드(구글)의 **공식 규칙**과 컴포넌트',
+        platform: ['앱', '웹'], parts: ['목록·상세', '설정·폼'], style: ['실서비스 UI'],
       },
     ],
   },
 
   {
     id: 'reference-product',
-    title: '레퍼런스 — 제품 화면 짤 때',
-    blurb: '대시보드·목록·상세·설정처럼 "실제로 쓰는 화면"을 만들 때. 위 무드 사이트가 겉모습이라면 여기는 화면 흐름입니다.',
+    tab: 'refs',
+    short: '제품 화면',
+    title: '레퍼런스: 웹 제품 화면 짤 때',
+    blurb:
+      '대시보드·목록·상세·설정처럼 "실제로 쓰는 화면"을 만들 때. 무드 사이트가 겉모습이라면 여기는 화면 흐름입니다.',
     chapter: 'design',
     items: [
       {
-        name: 'Mobbin',
-        url: 'https://mobbin.com',
-        what: '실제 서비스의 **화면 흐름**을 단계별로 봅니다. 검색어: Review, Workspace, Dashboard',
-        note: '일부 무료',
+        name: 'Refero',
+        url: 'https://refero.design',
+        what: 'UI 패턴별로 실제 서비스 화면을 검색합니다. 화면 이름으로 찾기 좋습니다',
         pick: true,
+        platform: ['웹', '앱'], parts: ['대시보드', '온보딩·로그인', '목록·상세', '설정·폼'], style: ['실서비스 UI'],
+        kw: 'Pricing, Empty state, Settings',
+      },
+      {
+        name: 'Refero Styles',
+        url: 'https://styles.refero.design',
+        what: 'Refero의 별도 스타일 라이브러리. 사이트별 **색·서체·간격과 DESIGN.md**를 줘서, AI에게 디자인 기준을 그대로 넘기기 좋습니다',
+        platform: ['웹'], parts: ['랜딩', '대시보드'], style: [],
       },
       {
         name: 'SaaSFrame',
         url: 'https://www.saasframe.io',
-        what: 'B2B SaaS 화면 모음. 검색어: Dashboard, Detail, Settings',
+        what: 'B2B SaaS 화면 모음',
+        platform: ['웹'], parts: ['대시보드', '목록·상세', '설정·폼'], style: ['실서비스 UI'],
+        kw: 'Dashboard, Detail, Settings',
       },
       {
         name: 'Nicelydone',
         url: 'https://nicelydone.club',
-        what: '실제 SaaS의 **화면·사용 흐름·컴포넌트** 모음. 목록·상세·검토 화면을 찾기에 잘 맞습니다',
+        what: 'SaaS 화면 스크린샷 모음. 대시보드·설정·요금제 화면이 많습니다',
+        note: '일부 유료',
+        platform: ['웹'], parts: ['대시보드', '설정·폼', '목록·상세'], style: ['실서비스 UI'],
+      },
+      {
+        name: 'UI-Patterns',
+        url: 'https://ui-patterns.com',
+        what: '"이 문제엔 이 패턴" 식으로 정리한 무료 패턴 사전',
+        platform: ['웹', '앱'], parts: ['설정·폼', '목록·상세'], style: [],
       },
       {
         name: 'Figma Community',
         url: 'https://www.figma.com/community',
-        what: '**편집 가능한** 디자인과 컴포넌트를 복제해서 뜯어볼 수 있습니다. 검색어: Enterprise SaaS, Review Workspace',
+        what: '**편집 가능한** 디자인과 컴포넌트를 복제해서 뜯어볼 수 있습니다',
         note: '파일마다 라이선스 확인',
+        platform: ['웹', '앱'], parts: ['대시보드', '온보딩·로그인', '목록·상세', '설정·폼', '랜딩'], style: [],
+        kw: 'Enterprise SaaS, Review Workspace',
       },
       {
         name: 'Behance',
         url: 'https://www.behance.net',
-        what: '완성도 높은 디자인 사례. 검색어: Enterprise Product Design',
+        what: '완성도 높은 디자인 사례',
+        platform: ['웹', '앱'], parts: ['대시보드', '랜딩'], style: [],
+        kw: 'Enterprise Product Design',
+      },
+      {
+        name: 'v0 템플릿',
+        url: 'https://v0.app',
+        what: '남이 만든 화면을 구경하고, 마음에 들면 그 코드를 바로 가져올 수 있습니다. 완성된 사이트가 아니라 **만들 수 있는 화면**을 봅니다',
+        note: 'AI',
+        platform: ['웹'], parts: ['대시보드', '랜딩', '설정·폼'], style: ['미니멀'],
       },
     ],
   },
 
   {
     id: 'reference-component',
-    title: '레퍼런스 — 컴포넌트 하나씩 볼 때',
-    blurb:
-      '"상태 라벨을 어떻게 생기게 하지?" 처럼 **부품 하나**를 정할 때. 공식 문서라 예시를 눌러보고 코드까지 볼 수 있습니다. 꼬리표가 부품 종류입니다.',
+    tab: 'refs',
+    short: '컴포넌트',
+    title: '레퍼런스: 컴포넌트 하나씩 볼 때',
+    blurb: '"상태 라벨을 어떻게 생기게 하지?" 처럼 **부품 하나**를 정할 때. 공식 문서라 예시를 눌러보고 코드까지 볼 수 있습니다. 위 필터의 "부품" 줄로 종류별로 볼 수 있습니다.',
     chapter: 'design',
-    fold: true,
     items: [
       {
         name: 'Radix Badge',
@@ -553,90 +697,150 @@ export const resourceGroups = [
         what: '옅은 배경·테두리·채움형을 **한 화면에서 나란히 비교**합니다. 상태 라벨 모양을 고를 때 여기부터',
         note: '배지',
         pick: true,
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
         name: 'Vercel Geist Badge',
         url: 'https://vercel.com/geist/badge',
         what: '절제된 색과 작은 아이콘. 눈에 덜 걸리는 라벨',
         note: '배지',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
         name: 'Untitled UI Badges',
         url: 'https://www.untitledui.com/react/components/badges',
         what: '점·아이콘을 넣은 둥근 라벨. 변형이 가장 많습니다',
         note: '배지',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
         name: 'Mantine Badge',
         url: 'https://mantine.dev/core/badge/',
         what: '색·크기·둥글기를 조절판으로 바꿔가며 봅니다',
         note: '배지',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
         name: 'Atlassian Lozenge',
         url: 'https://atlassian.design/components/lozenge/',
         what: '업무 도구의 간결한 상태 표시(진행 중·완료·보류). 색마다 **언제 쓰는지** 규칙이 적혀 있습니다',
         note: '배지',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
         name: 'Carbon Tag',
         url: 'https://carbondesignsystem.com/components/tag/usage/',
         what: '상태가 아니라 **분류**용 태그. 필터·지울 수 있는 태그의 쓰임새 설명',
         note: '태그',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'Dice UI — Status',
+        name: 'Dice UI: Status',
         url: 'https://diceui.com/docs/components/base/status',
         what: '점과 텍스트로 표시하는 상태 라벨. 다섯 색상과 점의 움직임을 비교해 분석 중·확인 필요 같은 상태를 정할 때',
         note: '상태 표시 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'Kibo UI — Pill',
+        name: 'Kibo UI: Pill',
         url: 'https://www.kibo-ui.com/components/pill',
         what: '상태 점·아이콘·아바타·버튼을 작은 라벨 안에 조합합니다. 검토 상태와 담당자 표시를 함께 설계할 때',
         note: '배지 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'ReUI — Badge',
+        name: 'ReUI: Badge',
         url: 'https://reui.io/docs/components/base/badge',
         what: '채움·옅은 배경·테두리·점이 있는 배지 예시. 밝은 화면에서 라벨의 존재감을 어느 정도 줄지 비교할 때',
         note: '배지 · 코드 예시',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'coss ui — Badge',
+        name: 'coss ui: Badge',
         url: 'https://coss.com/ui/docs/components/badge',
         what: '작고 절제된 배지와 변형을 코드로 봅니다. 밝은 작업 화면에서 장식이 적은 라벨을 찾을 때',
         note: '배지 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'Tremor — Badge',
+        name: 'Tremor: Badge',
         url: 'https://www.tremor.so/docs/ui/badge',
         what: '얇은 테두리와 옅은 바탕으로 기본·중립·성공·주의·오류를 구분합니다. 대시보드의 상태 표시를 정할 때',
         note: '배지 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'Park UI — Badge',
+        name: 'Park UI: Badge',
         url: 'https://park-ui.com/docs/components/badge',
         what: '작은 라벨의 색·크기·변형을 비교합니다. 흰 카드 위에 얹을 간결한 배지를 찾을 때',
         note: '배지 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'Chakra UI — Status',
+        name: 'Chakra UI: Status',
         url: 'https://chakra-ui.com/docs/components/status',
         what: '작은 점과 텍스트를 조합한 상태 표시. 큰 색상 박스 없이 진행 상태를 전달할 때',
         note: '상태 표시 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'HeroUI — Chip',
+        name: 'HeroUI: Chip',
         url: 'https://heroui.com/en/docs/react/components/chip',
         what: '색과 크기가 다른 둥근 칩을 비교합니다. 분류 태그와 작은 상태 라벨의 모서리·밀도를 고를 때',
         note: '태그 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'Dice UI — Badge Overflow',
+        name: 'Dice UI: Badge Overflow',
         url: 'https://diceui.com/docs/components/base/badge-overflow',
         what: '공간에 들어가는 태그만 보여주고 나머지는 개수로 묶습니다. 검토 쟁점이나 출처 태그가 많은 카드를 정리할 때',
         note: '태그 묶음 · React',
+        platform: ['웹'],
+        parts: ['목록·상세', '대시보드'],
+        style: ['실서비스 UI'],
+        comp: ['배지·태그'],
       },
       {
         name: 'shadcn Card',
@@ -644,108 +848,160 @@ export const resourceGroups = [
         what: '카드 안에 제목·본문·버튼을 어디에 둘지. 가장 기본이 되는 배치',
         note: '카드',
         pick: true,
+        platform: ['웹'],
+        parts: ['대시보드', '목록·상세'],
+        style: ['실서비스 UI'],
+        comp: ['카드'],
       },
       {
         name: 'Radix Tabs',
         url: 'https://www.radix-ui.com/primitives/docs/components/tabs',
         what: '같은 자리에서 내용을 바꿔 보여줄 때. 키보드 조작까지 들어 있습니다',
         note: '탭',
+        platform: ['웹'],
+        parts: ['목록·상세', '설정·폼'],
+        style: ['실서비스 UI'],
+        comp: ['탭·펼치기'],
       },
       {
         name: 'shadcn Accordion',
         url: 'https://ui.shadcn.com/docs/components/accordion',
         what: '카드 안에서 긴 내용을 접었다 펼칠 때',
         note: '펼치기',
+        platform: ['웹'],
+        parts: ['목록·상세', '설정·폼'],
+        style: ['실서비스 UI'],
+        comp: ['탭·펼치기'],
       },
       {
         name: 'shadcn Sheet',
         url: 'https://ui.shadcn.com/docs/components/sheet',
         what: '화면 옆에서 밀려 나오는 패널. 목록을 떠나지 않고 상세를 열 때',
         note: '옆 패널',
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI'],
+        comp: ['옆 패널·채팅'],
       },
       {
-        name: 'assistant-ui — Assistant sidebar',
+        name: 'assistant-ui: Assistant sidebar',
         url: 'https://www.assistant-ui.com/elements/assistant-sidebar',
         what: '본문 옆에 AI 대화를 배치하는 구조와 코드를 봅니다. 상세·문서를 읽으면서 채팅을 이어갈 때',
         note: '채팅 패널 · React',
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI'],
+        comp: ['옆 패널·채팅'],
       },
       {
-        name: 'assistant-ui — Inline citation',
+        name: 'assistant-ui: Inline citation',
         url: 'https://www.assistant-ui.com/elements/inline-citation',
         what: '본문에 작은 출처 표시를 넣는 방식과 코드를 봅니다. 검토 의견과 근거를 연결하는 표시를 정할 때',
         note: '출처 표시 · React',
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI'],
+        comp: ['출처 표시'],
       },
       {
-        name: 'V7 Go — AI Citations',
+        name: 'V7 Go: AI Citations',
         url: 'https://docs.go.v7labs.com/docs/ai-citations',
         what: '인용 번호를 누르면 **원문의 해당 구간이 강조**됩니다. AI 답변에 근거를 붙일 때',
         note: '출처 표시',
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI'],
+        comp: ['출처 표시'],
       },
       {
-        name: 'Adobe Acrobat — 출처 확인',
+        name: 'Adobe Acrobat: 출처 확인',
         url: 'https://helpx.adobe.com/sg/acrobat/desktop/explore-pdf-spaces/view-citations.html',
         what: '답변을 문서 제목·위치·페이지와 연결하는 방식',
         note: '출처 표시',
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI'],
+        comp: ['출처 표시'],
       },
     ],
   },
 
   {
     id: 'reference-polished',
-    title: '레퍼런스 — 세련된 제품 UI',
-    blurb:
-      '정보가 많은데도 차분해 보이는 제품들. 전체를 베끼지 말고 **"무엇을 볼지"** 를 정해서 보세요 — 예: Attio의 상세 구성 + Linear의 라벨·색감.',
+    tab: 'refs',
+    short: '세련된 제품 UI',
+    title: '레퍼런스: 세련된 제품 UI',
+    blurb: '정보가 많은데도 차분해 보이는 제품들. 전체를 베끼지 말고 **"무엇을 볼지"** 를 정해서 보세요. 예: Attio의 상세 구성 + Linear의 라벨·색감.',
     chapter: 'design',
-    fold: true,
     items: [
       {
-        name: 'Attio — 상세페이지 리디자인',
+        name: 'Attio: 상세페이지 리디자인',
         url: 'https://attio.com/changelog/2026/record-page-redesign',
         what: '정보 패널, 작은 라벨, 카드와 타임라인의 **밀도**. 상세 화면을 짤 때 1순위',
         note: '상세 화면',
         pick: true,
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI', '미니멀'],
       },
       {
-        name: 'Linear — 디자인 리프레시',
+        name: 'Linear: 디자인 리프레시',
         url: 'https://linear.app/now/behind-the-latest-design-refresh',
         what: '차분한 다크톤, 작아진 아이콘·탭, 눈에 덜 걸리는 구분선. **왜 그렇게 바꿨는지** 설명이 있습니다',
         note: '라벨·색감',
         pick: true,
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI', '미니멀'],
+        comp: ['배지·태그'],
       },
       {
-        name: 'Plain — 새 인터페이스',
+        name: 'Plain: 새 인터페이스',
         url: 'https://www.plain.com/changelog/redesigned-interface',
         what: '리스트·필터·상세 내용을 한 화면에 촘촘하게 정리하는 방식',
         note: '목록+상세',
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI', '미니멀'],
       },
       {
-        name: 'Raycast — 화면 모음',
+        name: 'Raycast: 화면 모음',
         url: 'https://www.raycast.com/press',
         what: '라이트·다크 화면을 나란히 비교. 팝오버와 작은 도구 영역의 마감',
         note: '라이트/다크',
+        platform: ['웹', '앱'],
+        parts: ['인터랙션', '목록·상세'],
+        style: ['실서비스 UI', '미니멀'],
       },
       {
         name: 'Superlist',
         url: 'https://www.superlist.com/',
         what: '좀 더 부드러운 분위기. 체크 상태와 선택한 항목의 상세 표시',
         note: '부드러운 톤',
+        platform: ['웹', '앱'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI', '미니멀'],
       },
       {
-        name: 'Hebbia — 인용 미리보기',
+        name: 'Hebbia: 인용 미리보기',
         url: 'https://www.hebbia.com/blog/the-disclosure-december-2025',
         what: '글 중간의 Enhanced citation previews. 근거를 누르기 전에 **미리 보여주는** 방식',
         note: '출처 표시',
+        platform: ['웹'],
+        parts: ['목록·상세'],
+        style: ['실서비스 UI', '미니멀'],
+        comp: ['출처 표시'],
       },
     ],
   },
 
   {
     id: 'reference-flashy',
-    title: '레퍼런스 — 3D·네온·화려한 효과',
-    blurb:
-      '입체감·발광·홀로그램처럼 눈에 띄는 연출. ⚠️ **한 화면에 하나만** 쓰세요 — 여러 개를 섞으면 금방 산만해지고 느려집니다. 꼬리표가 효과 종류입니다.',
+    tab: 'refs',
+    short: '3D·네온 효과',
+    title: '레퍼런스: 3D·네온·화려한 효과',
+    blurb: '입체감·발광·홀로그램처럼 눈에 띄는 연출. ⚠️ **한 화면에 하나만** 쓰세요. 여러 개를 섞으면 금방 산만해지고 느려집니다.',
     chapter: 'design',
-    fold: true,
     items: [
       {
         name: 'Tilted Card',
@@ -753,30 +1009,50 @@ export const resourceGroups = [
         what: '커서를 따라 기울고, 내용이 층처럼 떠 있는 카드',
         note: '3D 카드',
         pick: true,
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['3D 카드'],
       },
       {
         name: 'Holo Card',
         url: 'https://reactbits.dev/components/holo-card',
         what: '홀로그램 필름처럼 반짝이는 재질감',
         note: '3D 카드',
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['3D 카드'],
       },
       {
         name: 'Glare Card',
         url: 'https://ui.aceternity.com/components/glare-card',
         what: '빛이 반사되는 유광 카드',
         note: '3D 카드',
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['3D 카드'],
       },
       {
         name: 'Glowing Effect',
         url: 'https://ui.aceternity.com/components/glowing-effect',
         what: '마우스 위치에 반응하는 발광 테두리',
         note: '네온',
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['네온 효과'],
       },
       {
         name: 'Neon Gradient Card',
         url: 'https://magicui.design/docs/components/neon-gradient-card',
         what: '핑크·시안 네온이 번지는 카드',
         note: '네온',
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['네온 효과'],
       },
       {
         name: 'Border Beam',
@@ -784,18 +1060,30 @@ export const resourceGroups = [
         what: '카드나 버튼 테두리를 따라 빛이 흐릅니다. 네온 중에서는 가장 얌전해서 **업무용 화면에도 얹기 쉽습니다**',
         note: '네온',
         pick: true,
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['네온 효과'],
       },
       {
         name: 'Electric Border',
         url: 'https://reactbits.dev/animations/electric-border',
         what: '전기처럼 흔들리는 강한 네온 테두리',
         note: '네온',
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['네온 효과'],
       },
       {
         name: 'Chroma Grid',
         url: 'https://reactbits.dev/components/chroma-grid',
         what: '커서 주변에만 색이 살아나는 카드 그리드',
         note: '네온',
+        platform: ['웹'],
+        parts: ['인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+        comp: ['네온 효과'],
       },
       {
         name: 'Huly',
@@ -803,36 +1091,231 @@ export const resourceGroups = [
         what: '**업무용 제품**에 화려한 빛과 입체 연출을 섞은 랜딩. "진지한 서비스인데 화려하게"의 기준점',
         note: '전체 분위기',
         pick: true,
+        platform: ['웹'],
+        parts: ['랜딩', '인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
       },
       {
         name: 'Lusion',
         url: 'https://lusion.co/',
         what: '강한 3D 공간감과 스크롤·모션 연출',
         note: '전체 분위기',
+        platform: ['웹'],
+        parts: ['랜딩', '인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
       },
       {
-        name: 'Lusion — About',
+        name: 'Lusion: About',
         url: 'https://lusion.co/about',
         what: '같은 스튜디오의 소개 페이지. 랜딩페이지 구성과 스크롤 흐름을 볼 때',
         note: '랜딩페이지',
+        platform: ['웹'],
+        parts: ['랜딩', '인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
       },
       {
         name: 'Active Theory',
         url: 'https://activetheory.net/',
         what: '몰입형 디지털 인터랙션. 따라 만들기보다 눈높이를 올리는 용도',
         note: '전체 분위기',
+        platform: ['웹'],
+        parts: ['랜딩', '인터랙션'],
+        style: ['3D·모션', '굵은·실험적'],
+      },
+    ],
+  },
+
+  {
+    id: 'portfolio',
+    tab: 'refs',
+    short: '개인 포트폴리오',
+    title: '포트폴리오: 실제 개인 사이트',
+    blurb: '내 포트폴리오를 만들 때. 화면 하나하나보다 "한 사람의 세계관을 어떻게 보여주나"를 보세요.',
+    chapter: 'design',
+    items: [
+      {
+        name: 'Gionatan Nese',
+        url: 'https://www.gionatannese.com',
+        what: '가장 먼저 볼 것. 흰 배경에서 실버 크롬 캐릭터가 움직이고, 스크롤에 따라 글자와 얽힙니다. 참고할 점: 실버 소재, 가운데 오브제, 캐릭터 브랜딩',
+        pick: true,
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션', '미니멀'],
       },
       {
-        name: 'Spline 예시',
+        name: 'Léo Parpeix',
+        url: 'https://www.leoparpeix.com',
+        what: '자기 성격을 상징하는 꽃 캐릭터를 중심에 둔 포트폴리오. 밝은 공간과 조각 작품 같은 연출. 참고할 점: 개인 페르소나, 여백, 하나의 세계관',
+        note: 'Awwwards 오늘의 사이트',
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션', '굵은·실험적'],
+      },
+      {
+        name: 'Maxime Heckel',
+        url: 'https://maximeheckel.com',
+        what: '기술 연구와 예술적인 그래픽을 같이 보여주는 개인 사이트. 셰이더 글은 블로그(blog.maximeheckel.com)에 있습니다. 개발 노트와 그래픽 실험을 잇는 방식을 참고하세요',
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['미니멀', '3D·모션'],
+      },
+      {
+        name: 'Guillaume Zhu',
+        url: 'https://guillaumezhu.com',
+        what: '프로젝트와 Playground(실험실)를 나누면서 모션과 아트 디렉션을 일관되게 적용했습니다. 참고할 점: 프로젝트 상세, 실험실, 페이지 전환',
+        note: '저장소 공개, 라이선스 없음',
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션', '에디토리얼'],
+        code: 'https://github.com/guillaume-zhu/my-portfolio-v3',
+        license: '라이선스 없음. 보기만',
+      },
+      {
+        name: 'Brittany Chiang',
+        url: 'https://brittanychiang.com',
+        what: '개발자 포트폴리오의 정석',
+        platform: ['웹'], parts: ['포트폴리오·블로그'], style: ['미니멀'],
+      },
+      {
+        name: 'Josh Comeau',
+        url: 'https://www.joshwcomeau.com',
+        what: '포트폴리오와 블로그를 합친 사이트',
+        platform: ['웹'], parts: ['포트폴리오·블로그'], style: ['일러스트·손그림'],
+      },
+      {
+        name: 'Maggie Appleton',
+        url: 'https://maggieappleton.com',
+        what: '일러스트 에세이. 사람 손맛이 있습니다',
+        platform: ['웹'], parts: ['포트폴리오·블로그'], style: ['일러스트·손그림', '에디토리얼'],
+      },
+      {
+        name: 'Rauno',
+        url: 'https://rauno.me',
+        what: '인터랙션 디테일',
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['미니멀'],
+      },
+      {
+        name: 'Paco Coursey',
+        url: 'https://paco.me',
+        what: '미니멀하고 전환이 부드럽습니다',
+        platform: ['웹'], parts: ['포트폴리오·블로그'], style: ['미니멀'],
+      },
+    ],
+  },
+
+  {
+    id: 'portfolio-code',
+    tab: 'refs',
+    short: '코드 공개',
+    title: '포트폴리오: 소스코드까지 공개된 곳',
+    blurb:
+      'Codex·Claude Code 에게 저장소를 보여주고 "이 움직임은 어떻게 만들었는지 설명해줘"라고 물어보기 좋은 곳. ⚠️ MIT 라이선스라도 **코드만** 자유롭고, 사진·이력서 같은 개인 콘텐츠는 가져다 쓰면 안 됩니다.',
+    chapter: 'build',
+    items: [
+      {
+        name: 'Bruno Simon',
+        url: 'https://bruno-simon.com',
+        what: 'Three.js 로 만든 게임 같은 포트폴리오. 게임 자체보다 3D 오브제의 움직임, 물리 효과, 최적화 방식을 보세요',
+        pick: true,
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션', '굵은·실험적'],
+        code: 'https://github.com/brunosimon/folio-2025',
+        license: 'MIT',
+      },
+      {
+        name: 'Naresh Khatri',
+        url: 'https://nareshkhatri.dev',
+        what: '3D 키보드 하나로 기술 스택을 보여줍니다. 키캡 하나가 기술 하나. Spline 으로 만들었습니다',
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션'],
+        code: 'https://github.com/Naresh-Khatri/3d-portfolio',
+        license: 'MIT, 가져다 쓰면 출처 표시 요청',
+      },
+      {
+        name: 'Terry Marquis',
+        url: 'https://terrymarquis.fr',
+        what: '3D 오브제, 스크롤 모션, 다국어, 모바일용 대체 이미지까지 들어 있습니다. Next.js + Three.js',
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션'],
+        code: 'https://github.com/Nefers12/portfolio',
+        license: '코드만 MIT, 사진·이력서·작업물은 제외',
+      },
+      {
+        name: 'Glowing Memory',
+        url: 'https://github.com/stevekwon211/glowing-memory',
+        what: '한국어·영어를 지원하는 3D 오브제 중심 포트폴리오 겸 작업 아카이브. 프로젝트, 글, 셰이더 실험을 같이 둡니다. 배포된 사이트는 지금 열리지 않아서 저장소만 볼 수 있습니다',
+        note: '라이선스 없음. 보기만',
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션'],
+      },
+    ],
+  },
+
+  {
+    id: 'portfolio-archive',
+    tab: 'refs',
+    short: '포트폴리오·모션 아카이브',
+    title: '포트폴리오·모션 디자인 아카이브',
+    blurb: '상 받은 사이트와 움직임 사례를 모은 곳. 검색어를 같이 적어뒀습니다.',
+    chapter: 'design',
+    items: [
+      {
+        name: 'Awwwards: Portfolio',
+        url: 'https://www.awwwards.com/websites/portfolio/',
+        what: 'Awwwards 에서 포트폴리오 사이트만 모은 칸',
+        pick: true,
+        platform: ['웹'], parts: ['포트폴리오·블로그', '인터랙션'], style: ['3D·모션', '굵은·실험적', '미니멀'],
+        kw: '3D, Minimal, White',
+      },
+      {
+        name: 'GSAP Showcase',
+        url: 'https://gsap.com/showcase/',
+        what: 'GSAP(애니메이션 라이브러리)로 만든 사이트 모음. 스크롤 모션을 찾을 때',
+        platform: ['웹'], parts: ['랜딩', '포트폴리오·블로그', '인터랙션'], style: ['3D·모션'],
+        kw: 'Scroll, Morphing, Portfolio',
+      },
+      {
+        name: 'Codrops',
+        url: 'https://tympanus.net/codrops/',
+        what: '인터랙션 튜토리얼과 "이 포트폴리오는 이렇게 만들었다" 글. 데모 코드가 같이 있습니다',
+        platform: ['웹'], parts: ['인터랙션', '포트폴리오·블로그'], style: ['3D·모션', '굵은·실험적'],
+        kw: 'WebGL, 3D Transition',
+      },
+      {
+        name: 'The FWA',
+        url: 'https://thefwa.com',
+        what: '2000년부터 이어진 디지털 디자인 상. 실험적인 사이트가 많습니다',
+        platform: ['웹'], parts: ['랜딩', '인터랙션'], style: ['굵은·실험적', '3D·모션'],
+        kw: 'Interactive, Digital Art',
+      },
+      {
+        name: 'Memorables',
+        url: 'https://memorabl.es',
+        what: '기억에 남는 웹사이트·인터페이스·모션·3D·타이포를 손으로 골라 만든 사람까지 적어둔 아카이브',
+        note: '주소 철자 memorabl.es',
+        platform: ['웹'], parts: ['랜딩', '포트폴리오·블로그', '인터랙션'], style: ['에디토리얼', '3D·모션'],
+        kw: 'Chrome, Motion, Minimal',
+      },
+      {
+        name: 'Award Site Teardowns',
+        url: 'https://rickcreates.com',
+        what: 'Awwwards·FWA 수상 사이트를 뜯어봅니다. 콘셉트, 디자인, 인터랙션, 구현, 성능까지. "오늘의 사이트"가 왜 뽑혔는지 볼 때',
+        platform: ['웹'], parts: ['랜딩', '포트폴리오·블로그', '인터랙션'], style: ['3D·모션', '굵은·실험적'],
+      },
+      {
+        name: 'Spline Examples',
         url: 'https://spline.design/examples',
-        what: '직접 돌려볼 수 있는 3D 장면 모음. 마음에 들면 복제해서 내 사이트에 넣을 수 있습니다',
-        note: '3D 장면',
+        what: '브라우저에서 돌아가는 3D 장면 예시. 커뮤니티(community.spline.design)에서 남의 파일을 복제해 볼 수 있습니다',
+        note: '무료 시작',
+        platform: ['웹'], parts: ['인터랙션', '랜딩'], style: ['3D·모션'],
+        kw: 'Product, Assembly, Robot',
+      },
+      {
+        name: 'Rauno Craft',
+        url: 'https://rauno.me/craft',
+        what: '마이크로 인터랙션 디테일',
+        platform: ['웹'], parts: ['인터랙션'], style: ['미니멀', '3D·모션'],
+      },
+      {
+        name: 'CodePen Trending',
+        url: 'https://codepen.io/trending',
+        what: '인터랙션 실험. 코드까지 같이 볼 수 있습니다',
+        platform: ['웹'], parts: ['인터랙션'], style: ['굵은·실험적'],
       },
     ],
   },
 
   {
     id: 'color',
+    tab: 'assets',
     title: '색 조합',
     blurb: '색을 세 개만 고르면 됩니다. 많을수록 어려워집니다.',
     chapter: 'design',
@@ -860,6 +1343,7 @@ export const resourceGroups = [
 
   {
     id: 'font-pairing',
+    tab: 'assets',
     title: '폰트 조합 찾기',
     chapter: 'design',
     items: [
@@ -876,7 +1360,8 @@ export const resourceGroups = [
 
   {
     id: 'font-ko',
-    title: '무료 폰트 — 한글',
+    tab: 'assets',
+    title: '한글 폰트 (무료)',
     blurb: '추천: 프리텐다드, 고운바탕, 마루부리, 온글잎 시리즈, 학교안심',
     chapter: 'design',
     items: [
@@ -897,7 +1382,8 @@ export const resourceGroups = [
 
   {
     id: 'font-en',
-    title: '무료 폰트 — 영문',
+    tab: 'assets',
+    title: '영문 폰트 (무료)',
     blurb:
       'AI가 잘 안 고르는 것 추천: Instrument Serif, Fraunces, Newsreader, Bricolage Grotesque, Karla, Sora, Schibsted Grotesk',
     chapter: 'design',
@@ -917,8 +1403,9 @@ export const resourceGroups = [
 
   {
     id: 'icons',
+    tab: 'assets',
     title: '아이콘',
-    blurb: '피할 것: Lucide, Feather, Heroicons — AI가 기본으로 고르는 3대장이라 티가 납니다.',
+    blurb: '피할 것: Lucide, Feather, Heroicons: AI가 기본으로 고르는 3대장이라 티가 납니다.',
     chapter: 'design',
     items: [
       {
@@ -960,6 +1447,7 @@ export const resourceGroups = [
 
   {
     id: 'photo',
+    tab: 'assets',
     title: '이미지·사진',
     blurb: '실사 이미지나 판화가 하나라도 들어가면 AI티가 확 줄어듭니다.',
     chapter: 'design',
@@ -997,6 +1485,7 @@ export const resourceGroups = [
 
   {
     id: 'illustration',
+    tab: 'assets',
     title: '일러스트·3D',
     chapter: 'design',
     items: [
@@ -1010,6 +1499,7 @@ export const resourceGroups = [
 
   {
     id: 'texture',
+    tab: 'assets',
     title: '텍스처·패턴',
     chapter: 'design',
     items: [
@@ -1025,17 +1515,11 @@ export const resourceGroups = [
 
   {
     id: 'interaction',
-    title: '인터랙션·코드',
+    tab: 'tools',
+    title: '인터랙션 코드',
     blurb: '움직임을 붙이고 싶을 때. 03 빌드 단계에서 씁니다.',
     chapter: 'build',
     items: [
-      { name: 'CodePen Trending', url: 'https://codepen.io/trending', what: '인터랙션 실험' },
-      {
-        name: 'Rauno — Craft',
-        url: 'https://rauno.me/craft',
-        what: '마이크로 인터랙션 디테일',
-        pick: true,
-      },
       { name: 'Easings.net', url: 'https://easings.net', what: '이징 커브 참고' },
       { name: 'GSAP Docs', url: 'https://gsap.com/docs', what: '스크롤 애니메이션' },
       { name: 'Motion (Framer)', url: 'https://motion.dev', what: 'React 애니메이션' },
@@ -1046,30 +1530,34 @@ export const resourceGroups = [
       },
     ],
   },
-
-  {
-    id: 'examples',
-    title: '예시 사이트',
-    blurb: '"이런 느낌으로"라고 AI에게 보여줄 때 좋습니다.',
-    chapter: 'design',
-    items: [
-      { name: 'Brittany Chiang', url: 'https://brittanychiang.com', what: '개발자 포트폴리오 정석' },
-      { name: 'Bruno Simon', url: 'https://bruno-simon.com', what: '3D 인터랙션 극단' },
-      { name: 'Josh Comeau', url: 'https://www.joshwcomeau.com', what: '포트폴리오 + 블로그 결합' },
-      {
-        name: 'Maggie Appleton',
-        url: 'https://maggieappleton.com',
-        what: '일러스트 에세이. 인간미가 있습니다',
-      },
-      { name: 'Rauno', url: 'https://rauno.me', what: '인터랙션 디테일' },
-      { name: 'Paco Coursey', url: 'https://paco.me', what: '미니멀 + 부드러운 전환' },
-    ],
-  },
 ]
 
-/** 특정 챕터와 연결된 그룹들 — 챕터 화면 하단에 보여준다. */
+/** 특정 챕터와 연결된 그룹들: 챕터 화면 하단에 보여준다. */
 export function resourcesForChapter(chapterId) {
   return resourceGroups.filter((g) => g.chapter === chapterId)
 }
 
 export const resourceCount = resourceGroups.reduce((n, g) => n + g.items.length, 0)
+
+/** 참고 소스 탭. 그룹의 tab 값이 이 id 중 하나여야 한다. */
+export const resourceTabs = [
+  { id: 'refs', label: '레퍼런스' },
+  { id: 'assets', label: '디자인 에셋' },
+  { id: 'tools', label: '도구·서비스' },
+]
+
+/**
+ * 레퍼런스(tab: 'refs') 항목에 붙이는 태그. 칩 순서도 이 순서를 따른다.
+ *   platform  용도. 웹 / 앱
+ *   parts     화면 종류. 여러 개 가능
+ *   style     스타일. 빈 배열이면 "여러 스타일이 섞인 아카이브"로 보고 어떤 스타일 필터에도 보인다
+ *   comp      부품 종류 (선택). 컴포넌트 하나를 보여주는 링크에만 붙인다
+ *   kw        그 사이트 안에서 쓸 검색어 (선택)
+ *   code      소스코드 저장소 주소 (선택), license 는 그 라이선스
+ */
+export const refDims = {
+  platform: ['웹', '앱'],
+  parts: ['랜딩', '대시보드', '온보딩·로그인', '목록·상세', '설정·폼', '포트폴리오·블로그', '인터랙션'],
+  style: ['미니멀', '에디토리얼', '굵은·실험적', '일러스트·손그림', '3D·모션', '실서비스 UI'],
+  comp: ['배지·태그', '카드', '탭·펼치기', '옆 패널·채팅', '출처 표시', '3D 카드', '네온 효과'],
+}

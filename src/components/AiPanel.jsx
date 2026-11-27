@@ -48,7 +48,7 @@ export default function AiPanel({
         <div className="ai-result">
           {cached && (
             <p className="ai-cached">
-              저장된 답을 다시 보여줍니다 — 이번엔 요금이 나가지 않았습니다.
+              저장된 답을 다시 보여줍니다. 이번엔 요금이 나가지 않았습니다.
             </p>
           )}
           {typeof children === 'function' ? children(result) : children}

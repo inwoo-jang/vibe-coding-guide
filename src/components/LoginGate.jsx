@@ -52,7 +52,7 @@ export default function LoginGate({ title = '로그인하면 이어서 할 수 �
 
       {error ? (
         <p className="ai-error">
-          로그인을 시작하지 못했습니다 — {error.message}
+          로그인을 시작하지 못했습니다: {error.message}
           <span className="ai-hint">
             {' '}
             대부분 Supabase 대시보드에서 <strong>{error.provider}</strong> 제공자를 아직 안 켠
