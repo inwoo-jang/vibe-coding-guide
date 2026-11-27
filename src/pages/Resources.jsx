@@ -1,30 +1,45 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { resourceGroups, resourceCount } from '../data/resources'
-import { chapterById } from '../data/chapters'
-import { inline } from '../components/inline'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { resourceGroups, resourceCount } from "../data/resources";
+import { chapterById } from "../data/chapters";
+import { inline } from "../components/inline";
 
 export default function Resources() {
-  const [q, setQ] = useState('')
-  const query = q.trim().toLowerCase()
+  const [q, setQ] = useState("");
+  const query = q.trim().toLowerCase();
+
+  // 접힌 분류(fold) 중 펼쳐둔 것. 주소에 #분류 가 붙어 들어왔으면 그건 열어둔다.
+  const [opened, setOpened] = useState(
+    () => new Set([window.location.hash.slice(1)]),
+  );
+  const setOpen = (id, on) =>
+    setOpened((prev) => {
+      const next = new Set(prev);
+      if (on) next.add(id);
+      else next.delete(id);
+      return next;
+    });
 
   // 그룹 안의 항목만 걸러내고, 남은 게 있는 그룹만 보여준다.
   const groups = resourceGroups
     .map((g) => ({
       ...g,
       items: g.items.filter((it) =>
-        `${it.name} ${it.what} ${it.note ?? ''} ${g.title}`.toLowerCase().includes(query),
+        `${it.name} ${it.what} ${it.note ?? ""} ${g.title}`
+          .toLowerCase()
+          .includes(query),
       ),
     }))
-    .filter((g) => g.items.length > 0)
+    .filter((g) => g.items.length > 0);
 
   return (
     <div className="page">
       <header className="page-head">
         <h1>참고 소스</h1>
         <p className="lede">
-          기획할 때 쓰는 도구와, 만든 결과물이 <strong>AI가 찍어낸 것처럼 보이지 않게</strong> 해줄
-          레퍼런스·에셋 모음입니다. 총 {resourceCount}개.
+          기획할 때 쓰는 도구와, 만든 결과물이{" "}
+          <strong>AI가 찍어낸 것처럼 보이지 않게</strong> 해줄 레퍼런스·에셋
+          모음입니다. 총 {resourceCount}개.
         </p>
       </header>
 
@@ -40,7 +55,12 @@ export default function Resources() {
       {!query && (
         <nav className="res-toc">
           {resourceGroups.map((g) => (
-            <a key={g.id} href={`#${g.id}`} className="stage-pill">
+            <a
+              key={g.id}
+              href={`#${g.id}`}
+              className="stage-pill"
+              onClick={() => setOpen(g.id, true)}
+            >
               {g.title}
               <span className="stage-num">{g.items.length}</span>
             </a>
@@ -48,14 +68,34 @@ export default function Resources() {
         </nav>
       )}
 
-      {groups.length === 0 && <p className="placeholder">검색 결과가 없습니다.</p>}
+      {groups.length === 0 && (
+        <p className="placeholder">검색 결과가 없습니다.</p>
+      )}
 
       {groups.map((group) => {
-        const chapter = group.chapter ? chapterById[group.chapter] : null
+        const chapter = group.chapter ? chapterById[group.chapter] : null;
+        // 검색 중에는 접힌 분류도 결과가 보이게 펼친다.
+        const isOpen = !group.fold || Boolean(query) || opened.has(group.id);
         return (
           <section key={group.id} id={group.id} className="res-group">
             <div className="res-head">
-              <h2>{group.title}</h2>
+              <h2>
+                {group.fold && !query ? (
+                  <button
+                    type="button"
+                    className="res-toggle"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpen(group.id, !isOpen)}
+                  >
+                    {group.title}
+                    <span className="res-toggle-meta">
+                      {group.items.length}개 · {isOpen ? "접기" : "펼치기"}
+                    </span>
+                  </button>
+                ) : (
+                  group.title
+                )}
+              </h2>
               {chapter && (
                 <Link to={`/learn/${chapter.id}`} className="res-chapter">
                   {chapter.stage} 챕터 →
@@ -64,33 +104,40 @@ export default function Resources() {
             </div>
             {group.blurb && <p className="res-blurb">{group.blurb}</p>}
 
-            <ul className="res-list">
-              {group.items.map((it) => (
-                <li key={it.url}>
-                  <a href={it.url} target="_blank" rel="noreferrer noopener" className="res-item">
-                    <span className="res-name">
-                      {it.name}
-                      {it.pick && <span className="tag tag-done">추천</span>}
-                      {it.note && <span className="res-note">{it.note}</span>}
-                    </span>
-                    <span className="res-what">{inline(it.what)}</span>
-                    <span className="res-host">{hostOf(it.url)}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {isOpen && (
+              <ul className="res-list">
+                {group.items.map((it) => (
+                  <li key={it.url}>
+                    <a
+                      href={it.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="res-item"
+                    >
+                      <span className="res-name">
+                        {it.name}
+                        {it.pick && <span className="tag tag-done">추천</span>}
+                        {it.note && <span className="res-note">{it.note}</span>}
+                      </span>
+                      <span className="res-what">{inline(it.what)}</span>
+                      <span className="res-host">{hostOf(it.url)}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 // 주소창에 뜨는 도메인만 짧게. 어디로 가는 링크인지 눌러보기 전에 알 수 있게 한다.
 function hostOf(url) {
   try {
-    return new URL(url).hostname.replace(/^www\./, '')
+    return new URL(url).hostname.replace(/^www\./, "");
   } catch {
-    return ''
+    return "";
   }
 }

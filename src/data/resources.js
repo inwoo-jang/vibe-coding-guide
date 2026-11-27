@@ -21,6 +21,7 @@
 //   title   보이는 제목 (필수)
 //   blurb   이 분류를 언제 여는지 한 줄 (선택)
 //   chapter 관련 챕터 id — 챕터에서 이 그룹으로 링크가 걸린다 (선택)
+//   fold    true 면 접힌 채로 시작한다. 항목이 많은 분류에 (선택)
 
 export const resourceGroups = [
   {
@@ -534,6 +535,232 @@ export const resourceGroups = [
         name: 'Behance',
         url: 'https://www.behance.net',
         what: '완성도 높은 디자인 사례. 검색어: Enterprise Product Design',
+      },
+    ],
+  },
+
+  {
+    id: 'reference-component',
+    title: '레퍼런스 — 컴포넌트 하나씩 볼 때',
+    blurb:
+      '"상태 라벨을 어떻게 생기게 하지?" 처럼 **부품 하나**를 정할 때. 공식 문서라 예시를 눌러보고 코드까지 볼 수 있습니다. 꼬리표가 부품 종류입니다.',
+    chapter: 'design',
+    fold: true,
+    items: [
+      {
+        name: 'Radix Badge',
+        url: 'https://www.radix-ui.com/themes/docs/components/badge',
+        what: '옅은 배경·테두리·채움형을 **한 화면에서 나란히 비교**합니다. 상태 라벨 모양을 고를 때 여기부터',
+        note: '배지',
+        pick: true,
+      },
+      {
+        name: 'Vercel Geist Badge',
+        url: 'https://vercel.com/geist/badge',
+        what: '절제된 색과 작은 아이콘. 눈에 덜 걸리는 라벨',
+        note: '배지',
+      },
+      {
+        name: 'Untitled UI Badges',
+        url: 'https://www.untitledui.com/react/components/badges',
+        what: '점·아이콘을 넣은 둥근 라벨. 변형이 가장 많습니다',
+        note: '배지',
+      },
+      {
+        name: 'Mantine Badge',
+        url: 'https://mantine.dev/core/badge/',
+        what: '색·크기·둥글기를 조절판으로 바꿔가며 봅니다',
+        note: '배지',
+      },
+      {
+        name: 'Atlassian Lozenge',
+        url: 'https://atlassian.design/components/lozenge/',
+        what: '업무 도구의 간결한 상태 표시(진행 중·완료·보류). 색마다 **언제 쓰는지** 규칙이 적혀 있습니다',
+        note: '배지',
+      },
+      {
+        name: 'Carbon Tag',
+        url: 'https://carbondesignsystem.com/components/tag/usage/',
+        what: '상태가 아니라 **분류**용 태그. 필터·지울 수 있는 태그의 쓰임새 설명',
+        note: '태그',
+      },
+      {
+        name: 'shadcn Card',
+        url: 'https://ui.shadcn.com/docs/components/card',
+        what: '카드 안에 제목·본문·버튼을 어디에 둘지. 가장 기본이 되는 배치',
+        note: '카드',
+        pick: true,
+      },
+      {
+        name: 'Radix Tabs',
+        url: 'https://www.radix-ui.com/primitives/docs/components/tabs',
+        what: '같은 자리에서 내용을 바꿔 보여줄 때. 키보드 조작까지 들어 있습니다',
+        note: '탭',
+      },
+      {
+        name: 'shadcn Accordion',
+        url: 'https://ui.shadcn.com/docs/components/accordion',
+        what: '카드 안에서 긴 내용을 접었다 펼칠 때',
+        note: '펼치기',
+      },
+      {
+        name: 'shadcn Sheet',
+        url: 'https://ui.shadcn.com/docs/components/sheet',
+        what: '화면 옆에서 밀려 나오는 패널. 목록을 떠나지 않고 상세를 열 때',
+        note: '옆 패널',
+      },
+      {
+        name: 'V7 Go — AI Citations',
+        url: 'https://docs.go.v7labs.com/docs/ai-citations',
+        what: '인용 번호를 누르면 **원문의 해당 구간이 강조**됩니다. AI 답변에 근거를 붙일 때',
+        note: '출처 표시',
+      },
+      {
+        name: 'Adobe Acrobat — 출처 확인',
+        url: 'https://helpx.adobe.com/sg/acrobat/desktop/explore-pdf-spaces/view-citations.html',
+        what: '답변을 문서 제목·위치·페이지와 연결하는 방식',
+        note: '출처 표시',
+      },
+    ],
+  },
+
+  {
+    id: 'reference-polished',
+    title: '레퍼런스 — 세련된 제품 UI',
+    blurb:
+      '정보가 많은데도 차분해 보이는 제품들. 전체를 베끼지 말고 **"무엇을 볼지"** 를 정해서 보세요 — 예: Attio의 상세 구성 + Linear의 라벨·색감.',
+    chapter: 'design',
+    fold: true,
+    items: [
+      {
+        name: 'Attio — 상세페이지 리디자인',
+        url: 'https://attio.com/changelog/2026/record-page-redesign',
+        what: '정보 패널, 작은 라벨, 카드와 타임라인의 **밀도**. 상세 화면을 짤 때 1순위',
+        note: '상세 화면',
+        pick: true,
+      },
+      {
+        name: 'Linear — 디자인 리프레시',
+        url: 'https://linear.app/now/behind-the-latest-design-refresh',
+        what: '차분한 다크톤, 작아진 아이콘·탭, 눈에 덜 걸리는 구분선. **왜 그렇게 바꿨는지** 설명이 있습니다',
+        note: '라벨·색감',
+        pick: true,
+      },
+      {
+        name: 'Plain — 새 인터페이스',
+        url: 'https://www.plain.com/changelog/redesigned-interface',
+        what: '리스트·필터·상세 내용을 한 화면에 촘촘하게 정리하는 방식',
+        note: '목록+상세',
+      },
+      {
+        name: 'Raycast — 화면 모음',
+        url: 'https://www.raycast.com/press',
+        what: '라이트·다크 화면을 나란히 비교. 팝오버와 작은 도구 영역의 마감',
+        note: '라이트/다크',
+      },
+      {
+        name: 'Superlist',
+        url: 'https://www.superlist.com/',
+        what: '좀 더 부드러운 분위기. 체크 상태와 선택한 항목의 상세 표시',
+        note: '부드러운 톤',
+      },
+      {
+        name: 'Hebbia — 인용 미리보기',
+        url: 'https://www.hebbia.com/blog/the-disclosure-december-2025',
+        what: '글 중간의 Enhanced citation previews. 근거를 누르기 전에 **미리 보여주는** 방식',
+        note: '출처 표시',
+      },
+    ],
+  },
+
+  {
+    id: 'reference-flashy',
+    title: '레퍼런스 — 3D·네온·화려한 효과',
+    blurb:
+      '입체감·발광·홀로그램처럼 눈에 띄는 연출. ⚠️ **한 화면에 하나만** 쓰세요 — 여러 개를 섞으면 금방 산만해지고 느려집니다. 꼬리표가 효과 종류입니다.',
+    chapter: 'design',
+    fold: true,
+    items: [
+      {
+        name: 'Tilted Card',
+        url: 'https://reactbits.dev/components/tilted-card',
+        what: '커서를 따라 기울고, 내용이 층처럼 떠 있는 카드',
+        note: '3D 카드',
+        pick: true,
+      },
+      {
+        name: 'Holo Card',
+        url: 'https://reactbits.dev/components/holo-card',
+        what: '홀로그램 필름처럼 반짝이는 재질감',
+        note: '3D 카드',
+      },
+      {
+        name: 'Glare Card',
+        url: 'https://ui.aceternity.com/components/glare-card',
+        what: '빛이 반사되는 유광 카드',
+        note: '3D 카드',
+      },
+      {
+        name: 'Glowing Effect',
+        url: 'https://ui.aceternity.com/components/glowing-effect',
+        what: '마우스 위치에 반응하는 발광 테두리',
+        note: '네온',
+      },
+      {
+        name: 'Neon Gradient Card',
+        url: 'https://magicui.design/docs/components/neon-gradient-card',
+        what: '핑크·시안 네온이 번지는 카드',
+        note: '네온',
+      },
+      {
+        name: 'Border Beam',
+        url: 'https://magicui.design/docs/components/border-beam',
+        what: '카드나 버튼 테두리를 따라 빛이 흐릅니다. 네온 중에서는 가장 얌전해서 **업무용 화면에도 얹기 쉽습니다**',
+        note: '네온',
+        pick: true,
+      },
+      {
+        name: 'Electric Border',
+        url: 'https://reactbits.dev/animations/electric-border',
+        what: '전기처럼 흔들리는 강한 네온 테두리',
+        note: '네온',
+      },
+      {
+        name: 'Chroma Grid',
+        url: 'https://reactbits.dev/components/chroma-grid',
+        what: '커서 주변에만 색이 살아나는 카드 그리드',
+        note: '네온',
+      },
+      {
+        name: 'Huly',
+        url: 'https://huly.io/',
+        what: '**업무용 제품**에 화려한 빛과 입체 연출을 섞은 랜딩. "진지한 서비스인데 화려하게"의 기준점',
+        note: '전체 분위기',
+        pick: true,
+      },
+      {
+        name: 'Lusion',
+        url: 'https://lusion.co/',
+        what: '강한 3D 공간감과 스크롤·모션 연출',
+        note: '전체 분위기',
+      },
+      {
+        name: 'Lusion — About',
+        url: 'https://lusion.co/about',
+        what: '같은 스튜디오의 소개 페이지. 랜딩페이지 구성과 스크롤 흐름을 볼 때',
+        note: '랜딩페이지',
+      },
+      {
+        name: 'Active Theory',
+        url: 'https://activetheory.net/',
+        what: '몰입형 디지털 인터랙션. 따라 만들기보다 눈높이를 올리는 용도',
+        note: '전체 분위기',
+      },
+      {
+        name: 'Spline 예시',
+        url: 'https://spline.design/examples',
+        what: '직접 돌려볼 수 있는 3D 장면 모음. 마음에 들면 복제해서 내 사이트에 넣을 수 있습니다',
+        note: '3D 장면',
       },
     ],
   },
