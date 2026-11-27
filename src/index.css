@@ -1664,6 +1664,56 @@ h1 {
   }
 }
 
+/* ── 폭 규칙 ────────────────────────────────────────────────
+   폭은 두 가지만 쓴다.
+   --content  64rem  상단바·본문·하단바의 왼쪽/오른쪽 끝을 모두 이 선에 맞춘다
+   --read     44rem  긴 글을 읽는 쪽(챕터·용어 사전 등). 왼쪽 끝은 --content 와 같다
+   문단 하나의 줄 길이는 --measure(38rem)로 따로 묶는다.
+   --edge 는 "화면이 넓으면 가운데 64rem, 좁으면 여백만" 을 계산한 좌우 패딩이다. */
+
+:root {
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --content: 64rem;
+  --read: 44rem;
+  --edge: max(var(--gutter), calc((100% - var(--content)) / 2));
+}
+
+.topbar,
+.footer,
+.setup-notice {
+  padding-left: var(--edge);
+  padding-right: var(--edge);
+}
+
+.page {
+  max-width: none;
+  padding: clamp(2rem, 5vw, 3.25rem) var(--edge) 5rem;
+}
+
+.page-narrow {
+  /* 읽는 쪽 페이지에서는 문단 폭도 읽기 폭에 맞춰, 구분선·표·문단 끝이 한 선에 오게 한다 */
+  --measure: var(--read);
+  max-width: none;
+  padding-right: max(var(--edge), calc(100% - var(--edge) - var(--read)));
+}
+
+.hero {
+  padding-top: 0;
+  padding-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.page-head {
+  margin-bottom: 2rem;
+}
+
+.page-head .search {
+  max-width: none;
+}
+
+.sec-title:first-of-type {
+  margin-top: 0;
+}
+
 /* ── 참고 소스: 탭·필터·레퍼런스 카드 ───────────────────── */
 
 .res-tabs {
